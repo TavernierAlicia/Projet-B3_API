@@ -1,4 +1,4 @@
-package main
+package erreur
 //handle custom error page
 func returnError(c *gin.Context) {
 	var cause string

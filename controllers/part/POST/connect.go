@@ -1,52 +1,19 @@
 package main
 
-//// CONTROLLERS EXAMPLE ////
-/*
-//handle index page
-func indexPage(c *gin.Context) {
-	data := Preview{}
-	c.HTML(200, "index.html", data)
-}
 
+func connectPart(c *gin.Context) {
 
-//handle form pro
-func formProPage(c *gin.Context) {
-	data := Preview{}
-	c.HTML(200, "form-pro.html", data)
-}
+	request_name := "connect_part"
 
-func receptForm(c *gin.Context) {
+	requestDB(client_id, request_name)
+	isConnected := true
 
-	data := Preview{}
-
-	fmt.Println(data)
-	c.Request.ParseForm()
-
-	mail := strings.Join(c.Request.PostForm["from"], " ")
-	name := strings.Join(c.Request.PostForm["name"], " ")
-	surname := strings.Join(c.Request.PostForm["surname"], " ")
-	subjectNum := strings.Join(c.Request.PostForm["subject"], " ")
-	cmdNumber := strings.Join(c.Request.PostForm["cmdNumber"], " ")
-	message := strings.Join(c.Request.PostForm["message"], " ")
-	pro := false
-
-	path := c.FullPath()
-
-	//Define is the client is a professionnal or not
-	if path == "/contact/form-pro" || path == "/professionnal/form-pro" || path == "/form-pro" {
-		pro = true
-	} else {
-		pro = false
+	data := PartConnect{
+		user_id: id,
+		name: name,
+		surname: surname,
+		connected: isConnected,
 	}
-
-	//choose subject and send mail
-	subject := SelectSubj(pro, subjectNum)
-	response := SendMail(mail, name, surname, subject, cmdNumber, message, pro)
-
-	if response == true {
-		c.Redirect(http.StatusMovedPermanently, "/success")
-	} else {
-		c.Redirect(http.StatusMovedPermanently, "/error")
-	}
+	c.JSON(200, data)
 }
-*/
+

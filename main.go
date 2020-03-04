@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	""
 )
 
 //define variables
@@ -24,8 +25,8 @@ func main() {
 	//Define router
 	router := gin.Default()
 
-	router.NoRoute(returnError)
-
+	//common routes
+	router.NoRoute(returnError())
 
 	//// ---------------------------------------- PROFESSIONNAL SIDE ---------------------------------------- ////
 
