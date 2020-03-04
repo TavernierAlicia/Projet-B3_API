@@ -1,19 +1,33 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"strings"
+	_"fmt"
+	_"net/http"
+	_"strings"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	""
 )
 
 //define variables
 var (
 	log *zap.Logger
 )
+
+
+//no route availlable
+func returnError(c *gin.Context) {
+	message := returnErrorT()
+	//display error page
+	data := Error{
+		Text: message,
+	}
+	c.JSON(404, data)
+}
+
+
+
+
 
 //main function
 func main() {
@@ -26,11 +40,14 @@ func main() {
 	router := gin.Default()
 
 	//common routes
-	router.NoRoute(returnError())
+	router.NoRoute(returnError)
 
+
+	/*
 	//// ---------------------------------------- PROFESSIONNAL SIDE ---------------------------------------- ////
 
 	//GET
+	
 	router.GET("app/pro/index", indexPro)
 	router.GET("app/pro/:pro_id/infos", showInfosPro)
 	router.GET("app/pro/bar", showMyBar)
@@ -71,6 +88,7 @@ func main() {
 
 	//// ---------------------------------------- PARTICULAR SIDE ---------------------------------------- ////
 	//GET
+	router.GET("app/part/create_account////////", createPart)
 	router.GET("app/part/index", indexPart)
 	router.GET("app/part/bars/all", showAllBars)
 	router.GET("app/part/bars/all/position", showAllBarsByPos)
@@ -95,7 +113,7 @@ func main() {
 	router.DELETE("app/part/:client_id/cart/delete/:item_id", removeCartItem)
 	router.DELETE("app/part/:client_id/cart/delete/", resetCart)
 
-
+	*/
 
 	//router.Run(":3000")
 	router.Run()

@@ -4,3 +4,9 @@ package main
 type Error struct {
 	Text       string
 }
+
+//new account struct
+
+//part struct
+
+//pro structs
