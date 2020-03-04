@@ -15,20 +15,6 @@ var (
 )
 
 
-//no route availlable
-func returnError(c *gin.Context) {
-	message := returnErrorT()
-	//display error page
-	data := Error{
-		Text: message,
-	}
-	c.JSON(404, data)
-}
-
-
-
-
-
 //main function
 func main() {
 
@@ -41,7 +27,7 @@ func main() {
 
 	//common routes
 	router.NoRoute(returnError)
-
+	router.GET("test/get", testGet)
 
 	/*
 	//// ---------------------------------------- PROFESSIONNAL SIDE ---------------------------------------- ////
@@ -115,7 +101,6 @@ func main() {
 
 	*/
 
-	//router.Run(":3000")
-	router.Run()
+	router.Run(":8080")
 
 }
