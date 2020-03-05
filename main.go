@@ -100,7 +100,9 @@ func main() {
 	router.DELETE("app/part/:client_id/cart/delete/", resetCart)
 
 	*/
-
+	//TODO
+	//move zap logger to important files
+	//add flags
 	router.Run(":8080")
 
 }
