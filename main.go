@@ -19,15 +19,32 @@ func main() {
 	//Define router
 	router := gin.Default()
 
-	//common routes
+	//noroute
 	router.NoRoute(returnError)
-	router.GET("test/get", testGet)
-	router.GET("test/test_request", testRequest)
-	router.POST("test/post", TestPost)
 
-	router.POST("test/postOptions/:name/:description/:price", TestPostOptions)
-	router.PUT("test/postOptions/:id/:name/:description/:price", TestUpdateOptions)
-	router.DELETE("test/postOptions/:id", TestDeleteOptions)
+	//createUser
+	router.POST("app/createUser/", createUser)
+
+	//auth
+	router.POST("app/auth/", auth)
+
+	//show bars
+	router.GET("app/show/", showBars)
+
+	//search bar
+	router.GET("app/search/", searchName)
+
+	//show favs
+	router.GET("app/favs/", showFavs)
+
+	//userProfile
+	router.GET("app/profile/", getUserProfile)
+
+	//modifyProfile
+	router.PUT("app/profile/edit/", editUser)
+
+	//show bar data
+	router.GET("app/show/:id", getEtabContent)
 
 	/*
 		//// ---------------------------------------- PROFESSIONNAL SIDE ---------------------------------------- ////
@@ -97,9 +114,6 @@ func main() {
 		router.DELETE("app/part/:client_id/cart/delete/", resetCart)
 
 	*/
-	//TODO
-	//move zap logger to important files
-	//add flags
-	router.Run(":8080")
 
+	router.Run(":8080")
 }
