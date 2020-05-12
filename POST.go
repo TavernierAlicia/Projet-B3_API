@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -38,4 +40,31 @@ func auth(c *gin.Context) {
 	} else {
 		c.JSON(401, "Login or password wrong")
 	}
+}
+
+func addingFavs(c *gin.Context) {
+	userid := checkAuth(c)
+	if userid == 0 {
+		return
+	}
+	etabid, err := strconv.ParseInt(c.Param("etabid"), 10, 64)
+	fmt.Println(err)
+
+	AddToFavs(userid, etabid)
+}
+
+func takeOrder(c *gin.Context) {
+	userid := checkAuth(c)
+	if userid == 0 {
+		return
+	}
+
+	var t TakeOrder
+
+	c.BindJSON(&t)
+
+	fmt.Println(t)
+
+	Order(userid, t)
+
 }

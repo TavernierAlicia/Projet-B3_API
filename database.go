@@ -122,7 +122,7 @@ func getEtabsParams(barType string, barPop string, barDist int64, lat float64, l
 		dist = 10
 		db2.Query("SET @userLat = ?;", lat)
 		db2.Query("SET @userLong = ?;", long)
-		request += " FROM (SELECT id, name, description, type, latitude, longitude, main_pic, subtype, date, ACOS(COS(RADIANS(latitude)) * COS(RADIANS(@userLat)) * COS(RADIANS(@userLong) - RADIANS(longitude)) + SIN(RADIANS(latitude)) * SIN(RADIANS(@userLat)) ) * 6371 AS distance_km FROM etabs HAVING distance_km < ?) AS e "
+		request += " FROM (SELECT id, name, description, type, latitude, longitude, main_pic, subtype, date, ACOS(COS(RADIANS(latitude)) * COS(RADIANS(@userLat)) * COS(RADIANS(@userLong) - RADIANS(longitude)) + SIN(RADIANS(latitude)) * SIN(RADIANS(@userLat)) ) * 6371 AS distance_km FROM etabs HAVING distance_km < ?) AS e"
 	}
 	if barPop == "fav" {
 		request += " LEFT JOIN (SELECT COUNT(user_id) AS favNum, etab_id FROM favoris GROUP BY etab_id) AS tempFav ON tempFav.etab_id = e.id"
@@ -170,10 +170,10 @@ func getEtabsParams(barType string, barPop string, barDist int64, lat float64, l
 	return data
 }
 
-func favEtabs(userid int64) (data []*Bars) {
+func favEtabs(userid int64) (data []*BarsInFavs) {
 	db, dbname := RunDb()
 
-	data = []*Bars{}
+	data = []*BarsInFavs{}
 	err := db.Select(&data, getFavs, userid)
 
 	if err != nil {
@@ -242,7 +242,7 @@ func ShowBarView(userid int64, etabid int64) (data BarView) {
 	var err error
 
 	//BAR INFOS
-	err = db.Select(&data.BarDetails, showBarDetails, etabid)
+	err = db.Select(&data.BarDetails, showBarDetails, userid, etabid)
 
 	if err != nil {
 		log.Error("failed to request database ", zap.String("database", dbname),
@@ -279,4 +279,28 @@ func ShowBarView(userid int64, etabid int64) (data BarView) {
 
 	return data
 
+}
+
+func AddToFavs(userid int64, etabid int64) {
+	db, dbname := RunDb()
+
+	db.Exec(addFavs, userid, etabid)
+	fmt.Println(dbname)
+	return
+}
+
+func DeleteFromFavs(userid int64, etabid int64) {
+	db, dbname := RunDb()
+
+	db.Exec(deleteFav, userid, etabid)
+	fmt.Println(dbname)
+	return
+}
+
+func Order(userid int64, t TakeOrder) {
+	db, dbname := RunDb()
+
+	db.Exec(addOrder, userid, t.Etab_id, t.Instructions, t.Waiting_time, t.Payment, t.Tip)
+	fmt.Println(dbname)
+	return
 }

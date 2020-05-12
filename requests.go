@@ -27,7 +27,17 @@ const (
 
 //get favs
 const (
-	getFavs = `SELECT etabs.id, etabs.name, etabs.description, etabs.type, etabs.latitude, etabs.longitude, etabs.main_pic, favoris.date AS date, etabs.subtype FROM favoris JOIN etabs ON etab_id = etabs.id WHERE user_id = ? ORDER BY date DESC`
+	getFavs = `SELECT etabs.id, etabs.name, etabs.type, etabs.subtype, etabs.street_num, etabs.street_name, etabs.main_pic, favoris.date AS date, favs.nbFavs FROM favoris JOIN etabs ON etab_id = etabs.id LEFT JOIN (SELECT COUNT(*) AS nbFavs, etab_id FROM favoris GROUP BY etab_id) AS favs ON favs.etab_id = favoris.etab_id WHERE user_id = ? ORDER BY date DESC`
+)
+
+//add favs
+const (
+	addFavs = `INSERT INTO favoris (user_id, etab_id) VALUES (?, ?)`
+)
+
+//delete favs
+const (
+	deleteFav = `DELETE FROM favoris WHERE user_id = ? AND etab_id = ?`
 )
 
 //get user details
@@ -47,7 +57,7 @@ const (
 
 //show bar
 const (
-	showBarDetails = `SELECT id, name, description, street_num, street_name, address_complement, city, zip, type, subtype, main_pic, date, happy, happy_end, tempFav.favNum AS fav FROM etabs LEFT JOIN (SELECT COUNT(user_id) AS favNum, etab_id FROM favoris GROUP BY etab_id) AS tempFav ON tempFav.etab_id = id WHERE id = ?`
+	showBarDetails = `SELECT IF(favoris.id IS NULL, 0, 1) AS is_fav, etabs.id, name, description, street_num, street_name, address_complement, city, zip, type, subtype, main_pic, etabs.date, happy, happy_end, tempFav.favNum AS fav FROM etabs LEFT JOIN (SELECT COUNT(user_id) AS favNum, etab_id FROM favoris GROUP BY etab_id) AS tempFav ON tempFav.etab_id = etabs.id LEFT JOIN favoris ON favoris.etab_id = etabs.id AND user_id = ? WHERE etabs.id = ?`
 )
 
 const (
@@ -64,11 +74,13 @@ const (
 									WHERE i.etab_id = ?`
 )
 
+//take order
+const (
+	addOrder = `INSERT INTO commands (client_id, etab_id, instructions, waiting_time, payment, tip) VALUES (?, ?, ?, ?, ?, ?)`
+)
 
 //----------------- PROS -----------------
 //GET
 //POST
 //PUT
 //DELETE
-
-*/

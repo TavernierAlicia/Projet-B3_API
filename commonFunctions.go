@@ -8,24 +8,6 @@ import (
 	"github.com/google/uuid"
 )
 
-/*
-func TestDeleteHeader(c *gin.Context) {
-	//id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	id, err := strconv.ParseInt(c.Request.Header.Get("id"), 10, 64)
-	if err != nil {
-		returnError(c)
-	} else {
-		response := testDelete(id)
-		fmt.Println(response)
-		if response != true {
-			returnError(c)
-		} else {
-			c.JSON(200, response)
-		}
-	}
-}
-*/
-
 //c.Request.Header.Get("keyName")
 
 func checkAuth(c *gin.Context) int64 {

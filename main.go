@@ -37,6 +37,12 @@ func main() {
 	//show favs
 	router.GET("app/favs/", showFavs)
 
+	//add Fav
+	router.POST("app/favs/add/:etabid", addingFavs)
+
+	//delete fav
+	router.DELETE("app/favs/delete/:etabid", deletingFavs)
+
 	//userProfile
 	router.GET("app/profile/", getUserProfile)
 
@@ -45,6 +51,8 @@ func main() {
 
 	//show bar data
 	router.GET("app/show/:id", getEtabContent)
+
+	router.POST("app/takeOrder", takeOrder)
 
 	/*
 		//// ---------------------------------------- PROFESSIONNAL SIDE ---------------------------------------- ////

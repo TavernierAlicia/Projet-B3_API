@@ -55,7 +55,7 @@ func showFavs(c *gin.Context) {
 	if userid == 0 {
 		return
 	}
-	var data []*Bars
+	var data []*BarsInFavs
 
 	data = favEtabs(userid)
 	c.JSON(200, data)

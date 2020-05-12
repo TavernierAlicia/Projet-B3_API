@@ -51,6 +51,7 @@ type barDetails struct {
 	Open        string "23:59"
 	HH          string `db:"happy"`
 	HHEnd       string `db:"happy_end"`
+	IsFav       bool   `db:"is_fav"`
 }
 
 type picture struct {
@@ -68,4 +69,26 @@ type item struct {
 	NewPrice    float64 `db:"newprice"`
 	Quantity    int64   `db:"quantity"`
 	Type        string  `db:"type"`
+}
+
+//get bars
+type BarsInFavs struct {
+	Id          int64  `db:"id"`
+	Name        string `db:"name"`
+	Type        string `db:"type"`
+	Subtype     string `db:"subtype"`
+	Street_num  string `db:"street_num"`
+	Street_name string `db:"street_name"`
+	Pic         string `db:"main_pic"`
+	DateAdded   string `db:"date"`
+	NbFavs      int64  `db:"nbFavs"`
+}
+
+type TakeOrder struct {
+	Etab_id      int64   `json:"etab_id"`
+	Instructions string  `json:"instructions"`
+	Waiting_time string  `json:"waiting_time"`
+	Payment      string  `json:"payment"`
+	Tip          int64   `json:"tip"`
+	Items        []int64 `json:"items_id"`
 }
