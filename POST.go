@@ -48,7 +48,10 @@ func addingFavs(c *gin.Context) {
 		return
 	}
 	etabid, err := strconv.ParseInt(c.Param("etabid"), 10, 64)
-	fmt.Println(err)
+
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	AddToFavs(userid, etabid)
 }
@@ -62,8 +65,6 @@ func takeOrder(c *gin.Context) {
 	var t TakeOrder
 
 	c.BindJSON(&t)
-
-	fmt.Println(t)
 
 	Order(userid, t)
 

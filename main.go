@@ -52,7 +52,14 @@ func main() {
 	//show bar data
 	router.GET("app/show/:id", getEtabContent)
 
+	//take order
 	router.POST("app/takeOrder", takeOrder)
+
+	//re-order
+	router.GET("app/getOrder/:commandid", getOrder)
+
+	//show orders
+	router.GET("app/showOrders", getOrders)
 
 	/*
 		//// ---------------------------------------- PROFESSIONNAL SIDE ---------------------------------------- ////

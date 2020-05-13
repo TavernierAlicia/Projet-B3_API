@@ -84,3 +84,28 @@ func getEtabContent(c *gin.Context) {
 	data = ShowBarView(userid, barid)
 	c.JSON(200, data)
 }
+
+func getOrder(c *gin.Context) {
+	userid := checkAuth(c)
+	if userid == 0 {
+		return
+	}
+
+	cmdId, err := strconv.ParseInt(c.Param("commandid"), 10, 64)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	data := GetOrder(cmdId)
+	c.JSON(200, data)
+}
+
+func getOrders(c *gin.Context) {
+	userid := checkAuth(c)
+	if userid == 0 {
+		return
+	}
+
+	data := GetOrders(userid)
+	c.JSON(200, data)
+}

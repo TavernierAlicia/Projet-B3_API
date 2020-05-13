@@ -49,69 +49,50 @@ func RunDb() (*sqlx.DB, string) {
 }
 
 func userCreate(name string, surname string, mail string, password string, birth string, phone string, token string) (response bool) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	response = false
 	db.MustExec(createAccount, name, surname, mail, password, birth, phone, token)
 	response = true
-	if response == false {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "createAccount"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "createAccount"))
-	}
 	return response
 }
 
 func authentification(mail string, password string) string {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	var token string
 	err := db.Get(&token, authReq, mail, password)
 	if err == nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "authReq"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "authReq"))
+		fmt.Println(err)
 	}
 	return token
 }
 
 func getUserid(token string) int64 {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	var userid int64
 	err := db.Get(&userid, getUID, token)
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "getUID"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "getUID"))
+		fmt.Println(err)
 	}
 	return userid
 }
 
 func getEtabs() (data []*Bars) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	data = []*Bars{}
 	err := db.Select(&data, getAllEtabs)
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "getAllEtabs"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "getAllEtabs"))
+		fmt.Println(err)
 	}
 	return data
 }
 
 func getEtabsParams(barType string, barPop string, barDist int64, lat float64, long float64) (data []*Bars) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 	dist := 0
 	var err error
 	db2, err := db.Beginx()
@@ -160,84 +141,66 @@ func getEtabsParams(barType string, barPop string, barDist int64, lat float64, l
 	db2.Commit()
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "getAllEtabsParams"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "getAllEtabsParams"))
+		fmt.Println(err)
 	}
 
 	return data
 }
 
 func favEtabs(userid int64) (data []*BarsInFavs) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	data = []*BarsInFavs{}
 	err := db.Select(&data, getFavs, userid)
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "getFavs"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "getFavs"))
+		fmt.Println(err)
 	}
 	return data
 }
 
 func search(keyPhrase string) (data []*Bars) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 	keyPhrase1 := "%" + keyPhrase + "%"
 	keyPhrase2 := keyPhrase + "%"
 	data = []*Bars{}
 	err := db.Select(&data, searchResult, keyPhrase2, keyPhrase1, keyPhrase2, keyPhrase1)
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "searchResult"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "searchResult"))
+		fmt.Println(err)
 	}
 	return data
 }
 
 func getUserData(userid int64) (data []*User) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	data = []*User{}
 	err := db.Select(&data, getUser, userid)
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "getUser"))
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "getUser"))
+		fmt.Println(err)
 	}
+
 	return data
 }
 
 func editUserData(userid int64, name string, surname string, birth string, mail string) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	db.Exec(editUserCm, name, surname, birth, mail, userid)
-	fmt.Println(dbname)
-	fmt.Println(editUserCm + name)
 	return
 }
 
 func editUserPass(userid int64, newPassword string, token string) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	db.Exec(editUserPwd, newPassword, token, userid)
-	fmt.Println(dbname)
 	return
 }
 
 func ShowBarView(userid int64, etabid int64) (data BarView) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 	data = BarView{}
 	var err error
 
@@ -245,36 +208,21 @@ func ShowBarView(userid int64, etabid int64) (data BarView) {
 	err = db.Select(&data.BarDetails, showBarDetails, userid, etabid)
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "ShowBarDetails"))
 		fmt.Println(err)
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "ShowBarDetails"))
 	}
 
 	//BAR PICS
 	err = db.Select(&data.Pictures, showBarPictures, etabid)
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "showBarPictures"))
 		fmt.Println(err)
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "showBarPictures"))
 	}
 
 	//BAR ITEMS
 	err = db.Select(&data.Items, showBarItems, etabid, userid, etabid)
 
 	if err != nil {
-		log.Error("failed to request database ", zap.String("database", dbname),
-			zap.String("query_name", "showBarItems"))
 		fmt.Println(err)
-	} else {
-		log.Info("Request Succeed ", zap.String("database", dbname),
-			zap.String("query_name", "showBarItems"))
 	}
 
 	return data
@@ -282,25 +230,82 @@ func ShowBarView(userid int64, etabid int64) (data BarView) {
 }
 
 func AddToFavs(userid int64, etabid int64) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	db.Exec(addFavs, userid, etabid)
-	fmt.Println(dbname)
 	return
 }
 
 func DeleteFromFavs(userid int64, etabid int64) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
 	db.Exec(deleteFav, userid, etabid)
-	fmt.Println(dbname)
 	return
 }
 
 func Order(userid int64, t TakeOrder) {
-	db, dbname := RunDb()
+	db, _ := RunDb()
 
-	db.Exec(addOrder, userid, t.Etab_id, t.Instructions, t.Waiting_time, t.Payment, t.Tip)
-	fmt.Println(dbname)
+	tx, err := db.Begin()
+
+	res, err := tx.Exec(addOrder, userid, t.Etab_id, t.Instructions, t.Waiting_time, t.Payment, t.Tip)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	command_id, err := res.LastInsertId()
+	for _, item := range t.Items {
+		_, err = tx.Exec(addOrderItems, command_id, item, item)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	tx.Exec(calcPrice, command_id, command_id)
+
+	err = tx.Commit()
+
 	return
+}
+
+func GetOrder(cmdId int64) (data []*OrderItems) {
+	db, _ := RunDb()
+
+	data = []*OrderItems{}
+
+	err := db.Select(&data, reOrder, cmdId)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	return data
+}
+
+func GetOrders(userid int64) (totalData []*Commands) {
+	db, _ := RunDb()
+
+	data := []*Command{}
+	subData := []*CommandItems{}
+	totalData = []*Commands{}
+
+	err := db.Select(&data, showOrders, userid)
+
+	for _, item := range data {
+
+		err = db.Select(&subData, showOrdersDetails, item.Id)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		cmd := &Commands{
+			*item,
+			subData,
+		}
+		totalData = append(totalData, cmd)
+	}
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	return totalData
 }

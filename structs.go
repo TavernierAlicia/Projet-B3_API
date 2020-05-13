@@ -92,3 +92,33 @@ type TakeOrder struct {
 	Tip          int64   `json:"tip"`
 	Items        []int64 `json:"items_id"`
 }
+
+type OrderItems struct {
+	Etab_id  int64   `db:"etab_id"`
+	Id       int64   `db:"id"`
+	Name     string  `db:"name"`
+	Price    float64 `db:"price"`
+	Sale     float64 `db:"sale"`
+	NewPrice float64 `db:"newprice"`
+}
+
+type Command struct {
+	Id        int64   `db:"id"`
+	Etab_name string  `db:"etab_name"`
+	Pic       string  `db:"main_pic"`
+	Date      string  `db:"cmd_date"`
+	Price     float64 `db:"totalprice"`
+	Status    string  `db:"status"`
+}
+
+type CommandItems struct {
+	CommandId int64  `db:"command_id"`
+	Quantity  int64  `db:"quantity"`
+	Name      string `db:"name"`
+	Price     string `db:"price"`
+}
+
+type Commands struct {
+	Cmd      Command
+	CmdItems []*CommandItems
+}
