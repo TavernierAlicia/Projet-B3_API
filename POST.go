@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -10,6 +9,7 @@ import (
 
 //create user
 func createUser(c *gin.Context) {
+	var err error
 	token := createUserToken()
 	c.Request.ParseForm()
 
@@ -25,8 +25,12 @@ func createUser(c *gin.Context) {
 		c.JSON(401, "Mismatch passwords")
 		return
 	}
-	userCreate(name, surname, mail, password, birth, phone, token)
-	c.JSON(200, "Account created")
+	err = userCreate(name, surname, mail, password, birth, phone, token)
+	if errorReq(c, err) != true {
+		c.JSON(200, "Account created")
+	} else {
+		c.JSON(400, "An error occured")
+	}
 }
 
 //authentification
@@ -49,11 +53,14 @@ func addingFavs(c *gin.Context) {
 	}
 	etabid, err := strconv.ParseInt(c.Param("etabid"), 10, 64)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
 
-	AddToFavs(userid, etabid)
+	err = AddToFavs(userid, etabid)
+	if errorReq(c, err) != true {
+		c.JSON(200, "Added!")
+	} else {
+		c.JSON(400, "An error occured")
+	}
 }
 
 func takeOrder(c *gin.Context) {
@@ -66,6 +73,10 @@ func takeOrder(c *gin.Context) {
 
 	c.BindJSON(&t)
 
-	Order(userid, t)
-
+	err := Order(userid, t)
+	if errorReq(c, err) != true {
+		c.JSON(200, "Ordered!")
+	} else {
+		c.JSON(400, "An error occured")
+	}
 }

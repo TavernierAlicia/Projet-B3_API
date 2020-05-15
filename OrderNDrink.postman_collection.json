@@ -1,0 +1,928 @@
+{
+	"info": {
+		"_postman_id": "3fb4f852-29b4-434d-8772-e9d64f645179",
+		"name": "OrderNDrink",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "showFavs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"value": "Vin",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/favs",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"favs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserProfile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/profile/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"profile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showbars - filters",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/show?type=Biere&distance=1&popularity=fav&lat=48.817944&long=2.319695",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"show"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Biere"
+								},
+								{
+									"key": "distance",
+									"value": "1"
+								},
+								{
+									"key": "popularity",
+									"value": "fav"
+								},
+								{
+									"key": "lat",
+									"value": "48.817944"
+								},
+								{
+									"key": "long",
+									"value": "2.319695"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showbars - searchbar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/search/?search=PARIS",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "PARIS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get bar infos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/show/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"show",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show Commands",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/commands/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"commands",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/getOrder/14",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"getOrder",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/showOrders",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"showOrders"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "userCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Testeur",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "mail",
+									"value": "test@caramail.fr",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "birth",
+									"value": "1978-04-03",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0102030405",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "1234",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/createUser/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"createUser",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mail",
+									"value": "test@caramail.fr",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/auth/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Take order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"etab_id\": 1,\n   \"instructions\": \"Pas de glacons\",\n   \"waiting_time\": \"00:00\",\n   \"payment\": \"Gpay\",\n   \"tip\": 0,\n   \"items_id\": [1, 1, 2, 1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/takeOrder/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"takeOrder",
+								""
+							],
+							"query": [
+								{
+									"key": "cartid",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addFav",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/favs/add/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"favs",
+								"add",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "deleteFav",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/favs/delete/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"favs",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "editProfile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Tests",
+									"type": "text"
+								},
+								{
+									"key": "birth",
+									"value": "2000-05-20",
+									"type": "text"
+								},
+								{
+									"key": "mail",
+									"value": "test@gmail.comm",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "pic",
+									"value": "/pictures/rien.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/profile/edit/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"profile",
+								"edit",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Demo",
+			"item": [
+				{
+					"name": "accept order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Jeanneau",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Jacques",
+									"type": "text"
+								},
+								{
+									"key": "birth",
+									"value": "2000-05-20",
+									"type": "text"
+								},
+								{
+									"key": "mail",
+									"value": "jeanne.robert@gmail.comm",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "3333",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/commands/fillcart/?orderid=1&status=accepted",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"commands",
+								"fillcart",
+								""
+							],
+							"query": [
+								{
+									"key": "orderid",
+									"value": "1"
+								},
+								{
+									"key": "status",
+									"value": "accepted"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change order status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "dcdb199e-2797-4041-8b26-08bc451dd47b"
+							},
+							{
+								"key": "type",
+								"type": "text",
+								"value": "Vin",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Jeanneau",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Jacques",
+									"type": "text"
+								},
+								{
+									"key": "birth",
+									"value": "2000-05-20",
+									"type": "text"
+								},
+								{
+									"key": "mail",
+									"value": "jeanne.robert@gmail.comm",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "3333",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8080/app/commands/fillcart/?orderid=1&status=ready",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"app",
+								"commands",
+								"fillcart",
+								""
+							],
+							"query": [
+								{
+									"key": "orderid",
+									"value": "1"
+								},
+								{
+									"key": "status",
+									"value": "ready"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -8,6 +8,7 @@ import (
 
 func editUser(c *gin.Context) {
 	userid := checkAuth(c)
+	var err error
 	token := c.Request.Header.Get("Authorization")
 	//var data []*User
 
@@ -17,6 +18,7 @@ func editUser(c *gin.Context) {
 	c.Request.ParseForm()
 	name := strings.Join(c.Request.PostForm["name"], "")
 	surname := strings.Join(c.Request.PostForm["surname"], "")
+	pic := strings.Join(c.Request.PostForm["pic"], "")
 	birth := strings.Join(c.Request.PostForm["birth"], "")
 	mail := strings.Join(c.Request.PostForm["mail"], "")
 	password := strings.Join(c.Request.PostForm["password"], "")
@@ -24,7 +26,7 @@ func editUser(c *gin.Context) {
 
 	//common infos change
 	if name != "" && surname != "" && birth != "" && mail != "" {
-		editUserData(userid, name, surname, birth, mail)
+		err = editUserData(userid, name, surname, birth, mail, pic)
 	} else {
 		c.JSON(400, "Field(s) missing")
 		return
@@ -44,9 +46,15 @@ func editUser(c *gin.Context) {
 				return
 			} else {
 				token = createUserToken()
-				editUserPass(userid, newPassword, token)
+				err = editUserPass(userid, newPassword, token)
 			}
+		} else {
+			c.JSON(403, "Incorrect password")
 		}
 	}
-	c.JSON(200, token)
+	if errorReq(c, err) != true {
+		c.JSON(200, token)
+	} else {
+		c.JSON(400, "An error occured")
+	}
 }

@@ -48,7 +48,7 @@ const (
 
 //change user data
 const (
-	editUserCm = `UPDATE clients SET name = ?, surname = ?, birth_date = ?, mail = ? WHERE id = ?`
+	editUserCm = `UPDATE clients SET name = ?, surname = ?, birth_date = ?, mail = ?, profile_pic = ? WHERE id = ?`
 )
 
 //change user pwd
@@ -66,13 +66,7 @@ const (
 )
 
 const (
-	showBarItems = `SELECT i.id, i.name, i.description, i.price, IFNULL(i.sale, 1) AS sale , (i.price * IFNULL(i.sale, 1)) AS newprice, i.type, IFNULL(ci.quantity, 0) AS quantity FROM items AS i 
-										LEFT JOIN 
-											(SELECT count(cart_items.id) AS quantity, cart_items.item_id FROM carts 
-										LEFT JOIN cart_items ON cart_items.cart_id = carts.id 
-											WHERE carts.etab_id = ? AND carts.client_id = ? AND carts.status = "current" 
-											GROUP BY cart_items.item_id) AS ci ON ci.item_id = i.id 
-									WHERE i.etab_id = ?`
+	showBarItems = `SELECT i.id, i.name, i.description, i.price, IFNULL(i.sale, 1) AS sale , (i.price * IFNULL(i.sale, 1)) AS newprice, i.type FROM items AS i WHERE i.etab_id = ?`
 )
 
 //take order

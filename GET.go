@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -22,18 +21,22 @@ func showBars(c *gin.Context) {
 
 	var data []*Bars
 
-	fmt.Println(err)
-
 	if barType == "all" && barPop == "all" && barDist == 0 {
-		data = getEtabs()
+		data, err = getEtabs()
 	} else {
-		data = getEtabsParams(barType, barPop, barDist, lat, long)
+		data, err = getEtabsParams(barType, barPop, barDist, lat, long)
 	}
-	c.JSON(200, data)
+	if errorReq(c, err) != true {
+		c.JSON(200, data)
+	} else {
+		c.JSON(400, "An error occured")
+	}
+
 }
 
 func searchName(c *gin.Context) {
 	var data []*Bars
+	var err error
 	userid := checkAuth(c)
 	if userid == 0 {
 		return
@@ -42,23 +45,33 @@ func searchName(c *gin.Context) {
 	keyPhrase := c.DefaultQuery("search", "")
 
 	if keyPhrase == "" {
-		data = getEtabs()
+		data, err = getEtabs()
 	} else {
-		data = search(keyPhrase)
+		data, err = search(keyPhrase)
 	}
 
-	c.JSON(200, data)
+	if errorReq(c, err) != true {
+		c.JSON(200, data)
+	} else {
+		c.JSON(400, "An error occured")
+	}
 }
 
 func showFavs(c *gin.Context) {
+	var err error
 	userid := checkAuth(c)
 	if userid == 0 {
 		return
 	}
 	var data []*BarsInFavs
 
-	data = favEtabs(userid)
-	c.JSON(200, data)
+	data, err = favEtabs(userid)
+	if errorReq(c, err) != true {
+		c.JSON(200, data)
+	} else {
+		c.JSON(400, "An error occured")
+	}
+
 }
 
 func getUserProfile(c *gin.Context) {
@@ -66,9 +79,15 @@ func getUserProfile(c *gin.Context) {
 	if userid == 0 {
 		return
 	}
+	var err error
 	var data []*User
-	data = getUserData(userid)
-	c.JSON(200, data)
+	data, err = getUserData(userid)
+	if errorReq(c, err) != true {
+		c.JSON(200, data)
+	} else {
+		c.JSON(400, "An error occured")
+	}
+
 }
 
 func getEtabContent(c *gin.Context) {
@@ -79,10 +98,14 @@ func getEtabContent(c *gin.Context) {
 	}
 
 	barid, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	fmt.Println(err)
+	printErr(err)
+	data, err = ShowBarView(userid, barid)
+	if errorReq(c, err) != true {
+		c.JSON(200, data)
+	} else {
+		c.JSON(400, "An error occured")
+	}
 
-	data = ShowBarView(userid, barid)
-	c.JSON(200, data)
 }
 
 func getOrder(c *gin.Context) {
@@ -92,12 +115,15 @@ func getOrder(c *gin.Context) {
 	}
 
 	cmdId, err := strconv.ParseInt(c.Param("commandid"), 10, 64)
-	if err != nil {
-		fmt.Println(err)
+	printErr(err)
+
+	data, err := GetOrder(cmdId)
+	if errorReq(c, err) != true {
+		c.JSON(200, data)
+	} else {
+		c.JSON(400, "An error occured")
 	}
 
-	data := GetOrder(cmdId)
-	c.JSON(200, data)
 }
 
 func getOrders(c *gin.Context) {
@@ -106,6 +132,10 @@ func getOrders(c *gin.Context) {
 		return
 	}
 
-	data := GetOrders(userid)
-	c.JSON(200, data)
+	data, err := GetOrders(userid)
+	if errorReq(c, err) != true {
+		c.JSON(200, data)
+	} else {
+		c.JSON(400, "An error occured")
+	}
 }

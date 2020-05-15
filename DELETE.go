@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +12,12 @@ func deletingFavs(c *gin.Context) {
 		return
 	}
 	etabid, err := strconv.ParseInt(c.Param("etabid"), 10, 64)
-	fmt.Println(err)
 
-	DeleteFromFavs(userid, etabid)
+	err = DeleteFromFavs(userid, etabid)
+	if errorReq(c, err) != true {
+		c.JSON(200, "deleted")
+	} else {
+		c.JSON(400, "An error occured")
+	}
+
 }

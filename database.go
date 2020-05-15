@@ -48,13 +48,11 @@ func RunDb() (*sqlx.DB, string) {
 	return db, dbname
 }
 
-func userCreate(name string, surname string, mail string, password string, birth string, phone string, token string) (response bool) {
+func userCreate(name string, surname string, mail string, password string, birth string, phone string, token string) (err error) {
 	db, _ := RunDb()
 
-	response = false
-	db.MustExec(createAccount, name, surname, mail, password, birth, phone, token)
-	response = true
-	return response
+	_, err = db.Exec(createAccount, name, surname, mail, password, birth, phone, token)
+	return err
 }
 
 func authentification(mail string, password string) string {
@@ -62,9 +60,8 @@ func authentification(mail string, password string) string {
 
 	var token string
 	err := db.Get(&token, authReq, mail, password)
-	if err == nil {
-		fmt.Println(err)
-	}
+	printErr(err)
+
 	return token
 }
 
@@ -73,29 +70,26 @@ func getUserid(token string) int64 {
 
 	var userid int64
 	err := db.Get(&userid, getUID, token)
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
+
 	return userid
 }
 
-func getEtabs() (data []*Bars) {
+func getEtabs() (data []*Bars, err error) {
 	db, _ := RunDb()
 
 	data = []*Bars{}
-	err := db.Select(&data, getAllEtabs)
+	err = db.Select(&data, getAllEtabs)
+	printErr(err)
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	return data
+	return data, err
 }
 
-func getEtabsParams(barType string, barPop string, barDist int64, lat float64, long float64) (data []*Bars) {
+func getEtabsParams(barType string, barPop string, barDist int64, lat float64, long float64) (data []*Bars, err error) {
 	db, _ := RunDb()
 	dist := 0
-	var err error
 	db2, err := db.Beginx()
+	printErr(err)
 	request := "SELECT e.id, e.name, e.description, e.type, e.latitude, e.longitude, e.main_pic, e.date, e.subtype"
 	if barDist == 0 && barPop == "all" {
 		request += " FROM etabs AS e"
@@ -126,9 +120,6 @@ func getEtabsParams(barType string, barPop string, barDist int64, lat float64, l
 	if barType != "all" {
 		if dist != 0 {
 			err = db2.Select(&data, request, dist, barType)
-			fmt.Println(barType)
-			fmt.Println(dist)
-			fmt.Println(request)
 		} else {
 			err = db2.Select(&data, request, barType)
 		}
@@ -140,162 +131,143 @@ func getEtabsParams(barType string, barPop string, barDist int64, lat float64, l
 
 	db2.Commit()
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
 
-	return data
+	return data, err
 }
 
-func favEtabs(userid int64) (data []*BarsInFavs) {
+func favEtabs(userid int64) (data []*BarsInFavs, err error) {
 	db, _ := RunDb()
 
 	data = []*BarsInFavs{}
-	err := db.Select(&data, getFavs, userid)
+	err = db.Select(&data, getFavs, userid)
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	return data
+	printErr(err)
+
+	return data, err
 }
 
-func search(keyPhrase string) (data []*Bars) {
+func search(keyPhrase string) (data []*Bars, err error) {
 	db, _ := RunDb()
 	keyPhrase1 := "%" + keyPhrase + "%"
 	keyPhrase2 := keyPhrase + "%"
 	data = []*Bars{}
-	err := db.Select(&data, searchResult, keyPhrase2, keyPhrase1, keyPhrase2, keyPhrase1)
+	err = db.Select(&data, searchResult, keyPhrase2, keyPhrase1, keyPhrase2, keyPhrase1)
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	return data
+	printErr(err)
+
+	return data, err
 }
 
-func getUserData(userid int64) (data []*User) {
+func getUserData(userid int64) (data []*User, err error) {
 	db, _ := RunDb()
 
 	data = []*User{}
-	err := db.Select(&data, getUser, userid)
+	err = db.Select(&data, getUser, userid)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
 
-	return data
+	return data, err
 }
 
-func editUserData(userid int64, name string, surname string, birth string, mail string) {
+func editUserData(userid int64, name string, surname string, birth string, mail string, pic string) (err error) {
 	db, _ := RunDb()
 
-	db.Exec(editUserCm, name, surname, birth, mail, userid)
-	return
+	_, err = db.Exec(editUserCm, name, surname, birth, mail, pic, userid)
+	return err
 }
 
-func editUserPass(userid int64, newPassword string, token string) {
+func editUserPass(userid int64, newPassword string, token string) (err error) {
 	db, _ := RunDb()
 
-	db.Exec(editUserPwd, newPassword, token, userid)
-	return
+	_, err = db.Exec(editUserPwd, newPassword, token, userid)
+	return err
 }
 
-func ShowBarView(userid int64, etabid int64) (data BarView) {
+func ShowBarView(userid int64, etabid int64) (data BarView, err error) {
 	db, _ := RunDb()
 	data = BarView{}
-	var err error
 
 	//BAR INFOS
 	err = db.Select(&data.BarDetails, showBarDetails, userid, etabid)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
 
 	//BAR PICS
 	err = db.Select(&data.Pictures, showBarPictures, etabid)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
 
 	//BAR ITEMS
-	err = db.Select(&data.Items, showBarItems, etabid, userid, etabid)
+	err = db.Select(&data.Items, showBarItems, etabid)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
 
-	return data
+	return data, err
 
 }
 
-func AddToFavs(userid int64, etabid int64) {
+func AddToFavs(userid int64, etabid int64) (err error) {
 	db, _ := RunDb()
 
-	db.Exec(addFavs, userid, etabid)
-	return
+	_, err = db.Exec(addFavs, userid, etabid)
+	return err
 }
 
-func DeleteFromFavs(userid int64, etabid int64) {
+func DeleteFromFavs(userid int64, etabid int64) (err error) {
 	db, _ := RunDb()
 
-	db.Exec(deleteFav, userid, etabid)
-	return
+	_, err = db.Exec(deleteFav, userid, etabid)
+	return err
 }
 
-func Order(userid int64, t TakeOrder) {
+func Order(userid int64, t TakeOrder) (err error) {
 	db, _ := RunDb()
 
 	tx, err := db.Begin()
+	printErr(err)
 
 	res, err := tx.Exec(addOrder, userid, t.Etab_id, t.Instructions, t.Waiting_time, t.Payment, t.Tip)
-	if err != nil {
-		fmt.Println(err)
-	}
+	printErr(err)
 
 	command_id, err := res.LastInsertId()
 	for _, item := range t.Items {
 		_, err = tx.Exec(addOrderItems, command_id, item, item)
-		if err != nil {
-			fmt.Println(err)
-		}
+		printErr(err)
 	}
 
 	tx.Exec(calcPrice, command_id, command_id)
 
 	err = tx.Commit()
 
-	return
+	return err
 }
 
-func GetOrder(cmdId int64) (data []*OrderItems) {
+func GetOrder(cmdId int64) (data []*OrderItems, err error) {
 	db, _ := RunDb()
 
 	data = []*OrderItems{}
 
-	err := db.Select(&data, reOrder, cmdId)
+	err = db.Select(&data, reOrder, cmdId)
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	return data
+	printErr(err)
+
+	return data, err
 }
 
-func GetOrders(userid int64) (totalData []*Commands) {
+func GetOrders(userid int64) (totalData []*Commands, err error) {
 	db, _ := RunDb()
 
 	data := []*Command{}
 	subData := []*CommandItems{}
 	totalData = []*Commands{}
 
-	err := db.Select(&data, showOrders, userid)
+	err = db.Select(&data, showOrders, userid)
 
 	for _, item := range data {
 
 		err = db.Select(&subData, showOrdersDetails, item.Id)
-		if err != nil {
-			fmt.Println(err)
-		}
+		printErr(err)
 
 		cmd := &Commands{
 			*item,
@@ -304,8 +276,6 @@ func GetOrders(userid int64) (totalData []*Commands) {
 		totalData = append(totalData, cmd)
 	}
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	return totalData
+	printErr(err)
+	return totalData, err
 }

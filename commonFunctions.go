@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/sha1"
 	"encoding/hex"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -45,4 +46,18 @@ func encodePw(password string) string {
 	h.Write([]byte(password))
 	sha1_hash := hex.EncodeToString(h.Sum(nil))
 	return sha1_hash
+}
+
+func errorReq(c *gin.Context, err error) bool {
+	if err != nil {
+		return true
+	} else {
+		return false
+	}
+}
+
+func printErr(err error) {
+	if err != nil {
+		fmt.Println(err)
+	}
 }

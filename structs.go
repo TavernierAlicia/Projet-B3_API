@@ -67,7 +67,6 @@ type item struct {
 	Price       float64 `db:"price"`
 	Sale        float64 `db:"sale"`
 	NewPrice    float64 `db:"newprice"`
-	Quantity    int64   `db:"quantity"`
 	Type        string  `db:"type"`
 }
 
