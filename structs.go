@@ -114,7 +114,7 @@ type CommandItems struct {
 	CommandId int64  `db:"command_id"`
 	Quantity  int64  `db:"quantity"`
 	Name      string `db:"name"`
-	Price     string `db:"price"`
+	Price     float64 `db:"price"`
 }
 
 type Commands struct {

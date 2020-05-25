@@ -4,12 +4,19 @@ import (
 	_ "fmt"
 	_ "net/http"
 	_ "strings"
-
+	_"os"
+	_"io"
 	"github.com/gin-gonic/gin"
 )
 
 //main function
 func main() {
+
+	//logFile, err := os.Create("history.log")
+	//if err != nil {
+	//  panic(err)
+	//}
+	//gin.DefaultWriter = io.MultiWriter(logFile, os.Stdout)
 
 	//Define router
 	router := gin.Default()
@@ -64,5 +71,5 @@ func main() {
 	//delete fav
 	router.DELETE("app/favs/delete/:etabid", deletingFavs)
 
-	router.Run(":8080")
+	router.Run(":9999")
 }
