@@ -1,0 +1,29 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /app/show/                --> main.showBars (3 handlers)
+[GIN-debug] GET    /app/search/              --> main.searchName (3 handlers)
+[GIN-debug] GET    /app/favs/                --> main.showFavs (3 handlers)
+[GIN-debug] GET    /app/profile/             --> main.getUserProfile (3 handlers)
+[GIN-debug] GET    /app/show/:id             --> main.getEtabContent (3 handlers)
+[GIN-debug] GET    /app/getOrder/:commandid  --> main.getOrder (3 handlers)
+[GIN-debug] GET    /app/showOrders           --> main.getOrders (3 handlers)
+[GIN-debug] POST   /app/createUser/          --> main.createUser (3 handlers)
+[GIN-debug] POST   /app/auth/                --> main.auth (3 handlers)
+[GIN-debug] POST   /app/favs/add/:etabid     --> main.addingFavs (3 handlers)
+[GIN-debug] POST   /app/takeOrder            --> main.takeOrder (3 handlers)
+[GIN-debug] PUT    /app/profile/edit/        --> main.editUser (3 handlers)
+[GIN-debug] DELETE /app/favs/delete/:etabid  --> main.deletingFavs (3 handlers)
+[GIN-debug] Listening and serving HTTP on :9999
+[GIN] 2020/05/24 - 01:17:17 | 404 |      76.569µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:17:20 | 404 |      25.797µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:17:33 | 404 |      63.403µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:17:34 | 404 |      14.524µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:17:34 | 404 |      14.113µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:17:34 | 404 |      14.777µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:17:34 | 404 |      13.899µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:17:34 | 404 |      29.968µs |  78.192.236.201 | GET      "/"
+[GIN] 2020/05/24 - 01:20:43 | 404 |      34.906µs |  78.192.236.201 | GET      "/"
