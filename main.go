@@ -64,5 +64,5 @@ func main() {
 	//delete fav
 	router.DELETE("app/favs/delete/:etabid", deletingFavs)
 
-	router.Run(":8080")
+	router.Run(":9999")
 }
