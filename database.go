@@ -99,14 +99,14 @@ func getEtabsParams(barType string, barPop string, barDist int64, lat float64, l
 	dist := 0
 	db2, err := db.Beginx()
 	printErr(err)
-	request := "SELECT e.id, e.name, e.description, e.type, e.latitude, e.longitude, e.main_pic, e.date, e.subtype"
+	request := "SELECT e.id, e.name, e.description, e.type, e.latitude, e.longitude, e.main_pic, e.date, e.subtype, e.street_num, e.street_name, e.city, e.zip, e.happy, e.happy_end "
 	if barDist == 0 && barPop == "all" {
 		request += " FROM etabs AS e"
 	} else {
 		dist = 10
 		db2.Query("SET @userLat = ?;", lat)
 		db2.Query("SET @userLong = ?;", long)
-		request += " FROM (SELECT id, name, description, type, latitude, longitude, main_pic, subtype, date, ACOS(COS(RADIANS(latitude)) * COS(RADIANS(@userLat)) * COS(RADIANS(@userLong) - RADIANS(longitude)) + SIN(RADIANS(latitude)) * SIN(RADIANS(@userLat)) ) * 6371 AS distance_km FROM etabs HAVING distance_km < ?) AS e"
+		request += " FROM (SELECT id, name, description, type, latitude, longitude, main_pic, subtype, date, street_num, street_name, city, zip, happy, happy_end, ACOS(COS(RADIANS(latitude)) * COS(RADIANS(@userLat)) * COS(RADIANS(@userLong) - RADIANS(longitude)) + SIN(RADIANS(latitude)) * SIN(RADIANS(@userLat)) ) * 6371 AS distance_km FROM etabs HAVING distance_km < ?) AS e"
 	}
 	if barPop == "fav" {
 		request += " LEFT JOIN (SELECT COUNT(user_id) AS favNum, etab_id FROM favoris GROUP BY etab_id) AS tempFav ON tempFav.etab_id = e.id"

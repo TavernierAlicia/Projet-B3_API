@@ -20,6 +20,9 @@ type Bars struct {
 	StreetName  string  `db:"street_name"`
 	City        string  `db:"city"`
 	Zip         string  `db:"zip"`
+
+	Happy    string `db:"happy"`
+	HappyEnd string `db:"happy_end"`
 }
 
 type User struct {
