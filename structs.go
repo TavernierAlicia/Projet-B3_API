@@ -7,15 +7,19 @@ type Error struct {
 
 //get bars
 type Bars struct {
-	Id          int64   `db:"id"`
-	Name        string  `db:"name"`
-	Description string  `db:"description"`
-	Type        string  `db:"type"`
-	Subtype     string  `db:"subtype"`
-	Lat         float64 `db:"latitude"`
-	Long        float64 `db:"longitude"`
-	Pic         string  `db:"main_pic"`
-	Date        string  `db:"date"`
+	Id          int64   `db: "id"`
+	Name        string  `db: "name"`
+	Description string  `db: "description"`
+	Type        string  `db: "type"`
+	Subtype     string  `db: "subtype"`
+	Lat         float64 `db: "latitude"`
+	Long        float64 `db: "longitude"`
+	Pic         string  `db: "main_pic"`
+	Date        string  `db: "date"`
+	StreetNum   int64   `db: "street_number"`
+	StreetName  string  `db: "street_name"`
+	City        string  `db: "city"`
+	Zip         string  `db: "zip"`
 }
 
 type User struct {

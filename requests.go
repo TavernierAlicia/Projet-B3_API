@@ -24,12 +24,12 @@ const (
 
 //get all etabs
 const (
-	getAllEtabs = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype FROM etabs ORDER BY date DESC`
+	getAllEtabs = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype, street_number, street_name, city, zip FROM etabs ORDER BY date DESC`
 )
 
 //get etabs by text
 const (
-	searchResult = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype FROM etabs WHERE subtype LIKE ? OR name LIKE ? OR city LIKE ? OR description LIKE ? ORDER BY date DESC`
+	searchResult = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype, street_number, street_name, city, zip FROM etabs WHERE subtype LIKE ? OR name LIKE ? OR city LIKE ? OR description LIKE ? ORDER BY date DESC`
 )
 
 //get favs
