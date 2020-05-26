@@ -7,19 +7,19 @@ type Error struct {
 
 //get bars
 type Bars struct {
-	Id          int64   `db: "id"`
-	Name        string  `db: "name"`
-	Description string  `db: "description"`
-	Type        string  `db: "type"`
-	Subtype     string  `db: "subtype"`
-	Lat         float64 `db: "latitude"`
-	Long        float64 `db: "longitude"`
-	Pic         string  `db: "main_pic"`
-	Date        string  `db: "date"`
-	StreetNum   int64   `db: "street_num"`
-	StreetName  string  `db: "street_name"`
-	City        string  `db: "city"`
-	Zip         string  `db: "zip"`
+	Id          int64   `db:"id"`
+	Name        string  `db:"name"`
+	Description string  `db:"description"`
+	Type        string  `db:"type"`
+	Subtype     string  `db:"subtype"`
+	Lat         float64 `db:"latitude"`
+	Long        float64 `db:"longitude"`
+	Pic         string  `db:"main_pic"`
+	Date        string  `db:"date"`
+	StreetNum   int64   `db:"street_num"`
+	StreetName  string  `db:"street_name"`
+	City        string  `db:"city"`
+	Zip         string  `db:"zip"`
 }
 
 type User struct {
@@ -127,27 +127,27 @@ type Commands struct {
 }
 
 type Auth struct {
-	Mail string `json: "mail"`
-	Pass string `json: "pass"`
+	Mail string `json:"mail"`
+	Pass string `json:"pass"`
 }
 
 type UserEdit struct {
-	Name    string `json: "name"`
-	Surname string `json: "surname"`
-	Birth   string `json: "birth"`
-	Phone   string `json: "phone"`
-	Mail    string `json: "mail"`
-	Pass    string `json: "pass"`
-	NewPass string `json: "newPass"`
-	Pic     string `json: "pic"`
+	Name    string `json:"name"`
+	Surname string `json:"surname"`
+	Birth   string `json:"birth"`
+	Phone   string `json:"phone"`
+	Mail    string `json:"mail"`
+	Pass    string `json:"pass"`
+	NewPass string `json:"newPass"`
+	Pic     string `json:"pic"`
 }
 
 type UserCreate struct {
-	Name        string `json: "name"`
-	Surname     string `json: "surname"`
-	Pass        string `json: "pass"`
-	Mail        string `json: "mail"`
-	Birth       string `json: "birth"`
-	Phone       string `json: "phone"`
-	ConfirmPass string `json: "confirmPass"`
+	Name        string `json:"name"`
+	Surname     string `json:"surname"`
+	Pass        string `json:"pass"`
+	Mail        string `json:"mail"`
+	Birth       string `json:"birth"`
+	Phone       string `json:"phone"`
+	ConfirmPass string `json:"confirmPass"`
 }
