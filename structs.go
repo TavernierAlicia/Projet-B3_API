@@ -111,13 +111,39 @@ type Command struct {
 }
 
 type CommandItems struct {
-	CommandId int64  `db:"command_id"`
-	Quantity  int64  `db:"quantity"`
-	Name      string `db:"name"`
+	CommandId int64   `db:"command_id"`
+	Quantity  int64   `db:"quantity"`
+	Name      string  `db:"name"`
 	Price     float64 `db:"price"`
 }
 
 type Commands struct {
 	Cmd      Command
 	CmdItems []*CommandItems
+}
+
+type Auth struct {
+	Mail string `json: "mail"`
+	Pass string `json: "pass"`
+}
+
+type UserEdit struct {
+	Name    string `json: "name"`
+	Surname string `json: "surname"`
+	Birth   string `json: "birth"`
+	Phone   string `json: "phone"`
+	Mail    string `json: "mail"`
+	Pass    string `json: "pass"`
+	NewPass string `json: "newPass"`
+	Pic     string `json: "pic"`
+}
+
+type UserCreate struct {
+	Name        string `json: "name"`
+	Surname     string `json: "surname"`
+	Pass        string `json: "pass"`
+	Mail        string `json: "mail"`
+	Birth       string `json: "birth"`
+	Phone       string `json: "phone"`
+	ConfirmPass string `json: "confirmPass"`
 }

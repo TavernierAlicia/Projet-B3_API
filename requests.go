@@ -7,10 +7,6 @@ const (
 )
 
 const (
-	mailChanged = `SELECT mail FROM clients WHERE is  = ?`
-)
-
-const (
 	createAccount = `INSERT INTO clients (name, surname, mail, password, birth_date, phone_number, token) 
 										SELECT * FROM (SELECT ? AS name, ? AS surname, ? AS mail, ? AS password, ? AS birth_date, ? AS phone_number, ? AS token) as ifexists 
 											WHERE NOT EXISTS (SELECT mail FROM clients WHERE mail = ? ) LIMIT 1`
@@ -58,7 +54,7 @@ const (
 
 //change user data
 const (
-	editUserCm = `UPDATE clients SET name = ?, surname = ?, birth_date = ?, mail = ?, profile_pic = ? WHERE id = ?`
+	editUserCm = `UPDATE clients SET name = ?, surname = ?, birth_date = ?, phone_number = ?, profile_pic = ? WHERE id = ?`
 )
 
 //change user pwd

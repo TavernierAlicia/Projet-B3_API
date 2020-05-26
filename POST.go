@@ -2,7 +2,6 @@ package main
 
 import (
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,42 +11,52 @@ func createUser(c *gin.Context) {
 	var err error
 	var good bool
 	token := createUserToken()
-	c.Request.ParseForm()
 
-	name := strings.Join(c.Request.PostForm["name"], " ")
-	surname := strings.Join(c.Request.PostForm["surname"], " ")
-	mail := strings.Join(c.Request.PostForm["mail"], " ")
-	password := encodePw(strings.Join(c.Request.PostForm["password"], " "))
-	confirmPassword := encodePw(strings.Join(c.Request.PostForm["confirmPassword"], " "))
-	birth := strings.Join(c.Request.PostForm["birth"], " ")
-	phone := strings.Join(c.Request.PostForm["phone"], " ")
+	var t UserCreate
+
+	c.BindJSON(&t)
+
+	name := t.Name
+	surname := t.Surname
+	mail := t.Mail
+	password := encodePw(t.Pass)
+	confirmPassword := encodePw(t.ConfirmPass)
+	birth := t.Birth
+	phone := t.Phone
 
 	if password != confirmPassword {
 		c.JSON(401, "Mismatch passwords")
 		return
-	}
-	err, good = userCreate(name, surname, mail, password, birth, phone, token)
-	if errorReq(c, err) != true {
-		if good == false {
-			c.JSON(400, "Mail already exists")
-		} else {
-			c.JSON(200, "Account created")
-		}
 	} else {
-		if good == false {
-			c.JSON(400, "Mail already exists")
+		err, good = userCreate(name, surname, mail, password, birth, phone, token)
+		if errorReq(c, err) != true {
+			if good == false {
+				c.JSON(400, "Mail already exists")
+			} else {
+				c.JSON(200, "Account created")
+			}
 		} else {
-			c.JSON(400, "An error occured")
+			if good == false {
+				c.JSON(400, "Mail already exists")
+			} else {
+				c.JSON(400, "An error occured")
+			}
 		}
 	}
 }
 
 //authentification
 func auth(c *gin.Context) {
-	c.Request.ParseForm()
-	mail := strings.Join(c.Request.PostForm["mail"], " ")
-	password := encodePw(strings.Join(c.Request.PostForm["password"], " "))
+	var t Auth
+
+	c.BindJSON(&t)
+
+	mail := t.Mail
+
+	password := encodePw(t.Pass)
+
 	token := authentification(mail, password)
+
 	if token != "" {
 		c.JSON(200, token)
 	} else {

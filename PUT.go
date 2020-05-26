@@ -1,7 +1,7 @@
 package main
 
 import (
-	"strings"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,25 +9,41 @@ import (
 func editUser(c *gin.Context) {
 	userid := checkAuth(c)
 	var err error
-	var good bool
+
 	token := c.Request.Header.Get("Authorization")
 	//var data []*User
 
 	if userid == 0 {
 		return
 	}
-	c.Request.ParseForm()
-	name := strings.Join(c.Request.PostForm["name"], "")
-	surname := strings.Join(c.Request.PostForm["surname"], "")
-	pic := strings.Join(c.Request.PostForm["pic"], "")
-	birth := strings.Join(c.Request.PostForm["birth"], "")
-	mail := strings.Join(c.Request.PostForm["mail"], "")
-	password := strings.Join(c.Request.PostForm["password"], "")
-	newPassword := strings.Join(c.Request.PostForm["newPassword"], "")
+
+	var t UserEdit
+
+	c.BindJSON(&t)
+
+	name := t.Name
+	surname := t.Surname
+	pic := t.Pic
+	birth := t.Birth
+	mail := t.Mail
+	phone := t.Phone
+	password := t.Pass
+	newPassword := t.NewPass
+
+	fmt.Println(name)
+
+	fmt.Println(surname)
+	fmt.Println(pic)
+
+	fmt.Println(birth)
+	fmt.Println(phone)
+
+	fmt.Println(password)
+	fmt.Println(newPassword)
 
 	//common infos change
-	if name != "" && surname != "" && birth != "" && mail != "" {
-		err, good = editUserData(userid, name, surname, birth, mail, pic)
+	if name != "" && surname != "" && birth != "" && phone != "" {
+		err = editUserData(userid, name, surname, birth, phone, pic)
 	} else {
 		c.JSON(400, "Field(s) missing")
 		return
@@ -54,16 +70,8 @@ func editUser(c *gin.Context) {
 		}
 	}
 	if errorReq(c, err) != true {
-		if good == false {
-			c.JSON(400, "Mail already exists")
-		} else {
-			c.JSON(200, token)
-		}
+		c.JSON(200, token)
 	} else {
-		if good == false {
-			c.JSON(400, "Mail already exists")
-		} else {
-			c.JSON(400, "An error occured")
-		}
+		c.JSON(400, "An error occured")
 	}
 }
