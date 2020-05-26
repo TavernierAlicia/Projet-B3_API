@@ -64,7 +64,7 @@ const (
 
 //show bar
 const (
-	showBarDetails = `SELECT IF(favoris.id IS NULL, 0, 1) AS is_fav, etabs.id, name, description, street_num, street_name, address_complement, city, zip, type, subtype, main_pic, etabs.date, happy, happy_end, IF(tempFav.favNum IS NULL, 0, 1) AS fav FROM etabs LEFT JOIN (SELECT IF(COUNT(user_id) IS NULL, 0, 1) AS favNum, etab_id FROM favoris GROUP BY etab_id) AS tempFav ON tempFav.etab_id = etabs.id LEFT JOIN favoris ON favoris.etab_id = etabs.id AND user_id = ? WHERE etabs.id = ?`
+	showBarDetails = `SELECT IF(favoris.id IS NULL, 0, 1) AS is_fav, etabs.id, name, description, street_num, street_name, address_complement, city, zip, type, subtype, main_pic, etabs.date, happy, happy_end, IFNULL(tempFav.favNum, 0) AS fav FROM etabs LEFT JOIN (SELECT IFNULL(COUNT(user_id), 0) AS favNum, etab_id FROM favoris GROUP BY etab_id) AS tempFav ON tempFav.etab_id = etabs.id LEFT JOIN favoris ON favoris.etab_id = etabs.id AND user_id = ? WHERE etabs.id = ?`
 )
 
 const (
