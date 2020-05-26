@@ -33,7 +33,7 @@ const (
 
 //add favs
 const (
-	addFavs = `INSERT INTO favoris (user_id, etab_id) VALUES (?, ?)`
+	addFavs = `INSERT INTO favoris(user_id, etab_id) SELECT * FROM (SELECT ? AS user_id, ? AS etab_id) AS ifexists WHERE NOT EXISTS (SELECT * FROM favoris WHERE user_id = ? AND etab_id = ?) LIMIT 1`
 )
 
 //delete favs

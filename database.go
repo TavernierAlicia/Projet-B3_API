@@ -210,7 +210,7 @@ func ShowBarView(userid int64, etabid int64) (data BarView, err error) {
 func AddToFavs(userid int64, etabid int64) (err error) {
 	db, _ := RunDb()
 
-	_, err = db.Exec(addFavs, userid, etabid)
+	_, err = db.Exec(addFavs, userid, etabid, userid, etabid)
 	return err
 }
 
