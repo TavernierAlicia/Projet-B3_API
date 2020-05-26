@@ -16,7 +16,7 @@ type Bars struct {
 	Long        float64 `db: "longitude"`
 	Pic         string  `db: "main_pic"`
 	Date        string  `db: "date"`
-	StreetNum   int64   `db: "street_number"`
+	StreetNum   int64   `db: "street_num"`
 	StreetName  string  `db: "street_name"`
 	City        string  `db: "city"`
 	Zip         string  `db: "zip"`
