@@ -3,7 +3,17 @@ package main
 //----------------- CLIENTS -----------------
 //create account (date format 'yyyy-mm-dd')
 const (
-	createAccount = `INSERT INTO clients (name, surname, mail, password, birth_date, phone_number, token) VALUES (?, ?, ?, ?, ?, ?, ?)`
+	verifyDouble = `SELECT mail FROM clients WHERE mail = ?`
+)
+
+const (
+	mailChanged = `SELECT mail FROM clients WHERE is  = ?`
+)
+
+const (
+	createAccount = `INSERT INTO clients (name, surname, mail, password, birth_date, phone_number, token) 
+										SELECT * FROM (SELECT ? AS name, ? AS surname, ? AS mail, ? AS password, ? AS birth_date, ? AS phone_number, ? AS token) as ifexists 
+											WHERE NOT EXISTS (SELECT mail FROM clients WHERE mail = ? ) LIMIT 1`
 )
 
 //authentification

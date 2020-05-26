@@ -9,6 +9,7 @@ import (
 func editUser(c *gin.Context) {
 	userid := checkAuth(c)
 	var err error
+	var good bool
 	token := c.Request.Header.Get("Authorization")
 	//var data []*User
 
@@ -26,7 +27,7 @@ func editUser(c *gin.Context) {
 
 	//common infos change
 	if name != "" && surname != "" && birth != "" && mail != "" {
-		err = editUserData(userid, name, surname, birth, mail, pic)
+		err, good = editUserData(userid, name, surname, birth, mail, pic)
 	} else {
 		c.JSON(400, "Field(s) missing")
 		return
@@ -53,8 +54,16 @@ func editUser(c *gin.Context) {
 		}
 	}
 	if errorReq(c, err) != true {
-		c.JSON(200, token)
+		if good == false {
+			c.JSON(400, "Mail already exists")
+		} else {
+			c.JSON(200, token)
+		}
 	} else {
-		c.JSON(400, "An error occured")
+		if good == false {
+			c.JSON(400, "Mail already exists")
+		} else {
+			c.JSON(400, "An error occured")
+		}
 	}
 }

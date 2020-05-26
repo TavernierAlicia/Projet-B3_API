@@ -10,6 +10,7 @@ import (
 //create user
 func createUser(c *gin.Context) {
 	var err error
+	var good bool
 	token := createUserToken()
 	c.Request.ParseForm()
 
@@ -25,11 +26,19 @@ func createUser(c *gin.Context) {
 		c.JSON(401, "Mismatch passwords")
 		return
 	}
-	err = userCreate(name, surname, mail, password, birth, phone, token)
+	err, good = userCreate(name, surname, mail, password, birth, phone, token)
 	if errorReq(c, err) != true {
-		c.JSON(200, "Account created")
+		if good == false {
+			c.JSON(400, "Mail already exists")
+		} else {
+			c.JSON(200, "Account created")
+		}
 	} else {
-		c.JSON(400, "An error occured")
+		if good == false {
+			c.JSON(400, "Mail already exists")
+		} else {
+			c.JSON(400, "An error occured")
+		}
 	}
 }
 

@@ -48,11 +48,20 @@ func RunDb() (*sqlx.DB, string) {
 	return db, dbname
 }
 
-func userCreate(name string, surname string, mail string, password string, birth string, phone string, token string) (err error) {
+func userCreate(name string, surname string, mail string, password string, birth string, phone string, token string) (err error, good bool) {
 	db, _ := RunDb()
 
-	_, err = db.Exec(createAccount, name, surname, mail, password, birth, phone, token)
-	return err
+	var verif string
+
+	err = db.Get(&verif, verifyDouble, mail)
+
+	if verif != mail {
+		_, err = db.Exec(createAccount, name, surname, mail, password, birth, phone, token, mail)
+		good = true
+	} else {
+		good = false
+	}
+	return err, good
 }
 
 func authentification(mail string, password string) string {
@@ -170,11 +179,26 @@ func getUserData(userid int64) (data []*User, err error) {
 	return data, err
 }
 
-func editUserData(userid int64, name string, surname string, birth string, mail string, pic string) (err error) {
+func editUserData(userid int64, name string, surname string, birth string, mail string, pic string) (err error, good bool) {
 	db, _ := RunDb()
+	var verif string
+	var oldMail string
 
-	_, err = db.Exec(editUserCm, name, surname, birth, mail, pic, userid)
-	return err
+	err = db.Get(&oldMail, mailChanged, userid)
+	if oldMail != mail {
+		err = db.Get(&verif, verifyDouble, mail)
+		if verif != mail {
+			_, err = db.Exec(editUserCm, name, surname, birth, mail, pic, userid)
+			good = true
+		} else {
+			good = false
+		}
+	} else {
+		_, err = db.Exec(editUserCm, name, surname, birth, mail, pic, userid)
+		good = true
+	}
+
+	return err, good
 }
 
 func editUserPass(userid int64, newPassword string, token string) (err error) {
