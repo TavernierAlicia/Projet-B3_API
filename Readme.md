@@ -1,10 +1,11 @@
-*** API Order'NDrink ***
+# *** API Order'NDrink *** 
 
-*App "Client"*
+## App client 
 
-** GET **
-# Show all bars with or without filters -> "/app/show"
-  ## Params 
+
+### GET
+#### Show all bars with or without filters -> "/app/show"
+  ##### Params 
   *Can be Null*
   - type (Biere, Vin... if null set default = all)
   - distance (km)
@@ -12,112 +13,116 @@
   - lat (user geolocalisation)
   - long (user geolocalisation)
 
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body
+  ##### Body
   *Null*
 
-# Show searchbar results -> "app/search"
-  ## Params 
+#### Show searchbar results -> "app/search"
+  ##### Params 
   *Can be Null*
   - search (Paris, vin, artisanal, rue de..)
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body
+  ##### Body
   *Null*
 
-# Get user profile -> "app/profile"
-  ## Params 
+#### Get user profile -> "app/profile"
+  ##### Params 
   *Null*
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body
+  ##### Body
   *Null*
 
-# Show details and menu for 1 etab -> "app/show/:id"
-  ## Params //bar id in path
+#### Show details and menu for 1 etab -> "app/show/:id"
+  ##### Params //bar id in path
   *Null*
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body
+  ##### Body
   *Null*
 
-# Show orders -> "app/showOrders"
-  ## Params 
+#### Show orders -> "app/showOrders"
+  ##### Params 
   *Null*
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body
+  ##### Body
   *Null*
 
-# Get details for 1 order -> "app/getOrder/:comandid"
-  ## Params //command id in path 
+#### Get details for 1 order -> "app/getOrder/:comandid"
+  ##### Params //command id in path 
   *Null*
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body
+  ##### Body
   *Null*
 
 
-** POST **
-# Create account -> "app/createUser/"
-  ## Params 
+### POST
+#### Create account -> "app/createUser/"
+  ##### Params 
+  *Null*
+  
+  ##### Headers
+  *Null*
+
+  ##### Body raw JSON
+  {
+	"name": string,
+	"surname": string,
+	"mail": string,
+	"pass": string,
+	"birth": string YYYY-MM-DD,
+	"phone": string LIMIT 10,
+	"confirmPass": string
+}
+
+#### Connect to account -> "app/auth/"
+  ##### Params 
   *Null*
   
   ## Headers
   *Null*
 
-  ## Body x-www-form-urlencoded
-  - name
-  - surname
-  - mail
-  - password
-  - confirmPassword
-  - birth (yyyy-mm-dd)
-  - phone (0102030405)
+  ##### Body raw JSON
+  {
+	  "mail": string,
+	  "pass": string
+  }
 
-# Connect to account -> "app/auth/"
-  ## Params 
+
+#### Add Fav -> "app/favs/add/:etabid"
+  ##### Params //bar id in path
   *Null*
   
-  ## Headers
-  *Null*
-
-  ## Body x-www-form-urlencoded
-  - mail
-  - password
-
-
-# Add Fav -> "app/favs/add/:etabid"
-  ## Params //bar id in path
-  *Null*
-  
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body 
+  ##### Body 
   *Null*
 
 
-# Take Order -> "app/takeOrder"
-  ## Params
+#### Take Order -> "app/takeOrder"
+  ##### Params
   *Null*
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body raw JSON
+  ##### Body raw JSON
   {
     "etab_id": int,
     "instructions": string,
@@ -127,31 +132,33 @@
     "items_id": [int, int, int]
   }
 
-** PUT **
-# Edit profile -> "app/profile/edit/"
-  ## Params
+### PUT
+#### Edit profile -> "app/profile/edit/"
+  ##### Params
   *Null*
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body x-www-form-urlencoded !! Password required if newPassword not empty !!
-  - name
-  - surname
-  - pic
-  - mail
-  - password
-  - newPassword
-  - birth (yyyy-mm-dd)
-  - phone (0102030405)
+  ##### Body raw JSON !! Password required if newPassword not empty !!
+  {
+	"name": string,
+	"surname": string,
+	"birth": string YYYY-MM-DD,
+	"mail": string,
+	"phone": string LIMIT 10,
+	"pass": string,
+	"newPass": string,
+	"pic": string
+  }
 
-** DELETE **
-# Delete Fav -> "app/favs/delete/:etabid"
-  ## Params //bar id in path 
+### DELETE 
+#### Delete Fav -> "app/favs/delete/:etabid"
+  ##### Params //bar id in path 
   *Null*
   
-  ## Headers
+  ##### Headers
   - Authorization = access token
 
-  ## Body
+  ##### Body
   *Null*
