@@ -3,7 +3,7 @@ package main
 //----------------- CLIENTS -----------------
 //create account (date format 'yyyy-mm-dd')
 const (
-	verifyDouble = `SELECT mail FROM clients WHERE mail = ?`
+	verifyDouble = `SELECT IFNULL(mail, "") FROM clients WHERE mail = ?`
 )
 
 const (
@@ -98,12 +98,12 @@ const (
 
 //show orders
 const (
-	showOrders = `SELECT IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, name AS etab_name, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE client_id = ? ORDER BY cmd_date DESC LIMIT 30`
+	showOrders = `SELECT IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, name AS etab_name, commands.etab_id, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE client_id = ? ORDER BY cmd_date DESC LIMIT 30`
 )
 
 //show orders details
 const (
-	showOrdersDetails = `SELECT command_id, COUNT(item_id) AS quantity, items.name, command_items.price FROM command_items JOIN items ON command_items.item_id = items.id WHERE command_id = ? GROUP BY item_id`
+	showOrdersDetails = `SELECT command_id, COUNT(item_id) AS quantity, items.id AS item_id, items.name, command_items.price FROM command_items JOIN items ON command_items.item_id = items.id WHERE command_id = ? GROUP BY item_id`
 )
 
 //----------------- PROS -----------------

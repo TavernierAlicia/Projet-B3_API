@@ -51,12 +51,14 @@ func RunDb() (*sqlx.DB, string) {
 func userCreate(name string, surname string, mail string, password string, birth string, phone string, token string) (err error, good bool) {
 	db, _ := RunDb()
 
-	var verif string
+	verif := "try"
 
 	err = db.Get(&verif, verifyDouble, mail)
+	printErr(err)
 
 	if verif != mail {
 		_, err = db.Exec(createAccount, name, surname, mail, password, birth, phone, token, mail)
+		printErr(err)
 		good = true
 	} else {
 		good = false

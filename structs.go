@@ -110,6 +110,7 @@ type OrderItems struct {
 
 type Command struct {
 	Id        int64   `db:"id"`
+	Etab_id   int64   `db:"etab_id"`
 	Etab_name string  `db:"etab_name"`
 	Pic       string  `db:"main_pic"`
 	Date      string  `db:"cmd_date"`
@@ -119,6 +120,7 @@ type Command struct {
 
 type CommandItems struct {
 	CommandId int64   `db:"command_id"`
+	Item_id   int64   `db:"item_id"`
 	Quantity  int64   `db:"quantity"`
 	Name      string  `db:"name"`
 	Price     float64 `db:"price"`
