@@ -2,7 +2,6 @@ package main
 
 import (
 	"strconv"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,7 +28,7 @@ func createUser(c *gin.Context) {
 		return
 	} else {
 		err, good = userCreate(name, surname, mail, password, birth, phone, token)
-		if errorReq(c, err) != true {
+		if errorReq(c, err) == false {
 			if good == false {
 				c.JSON(400, "Mail already exists")
 			} else {

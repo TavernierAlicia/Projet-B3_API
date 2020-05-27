@@ -3,7 +3,7 @@ package main
 //----------------- CLIENTS -----------------
 //create account (date format 'yyyy-mm-dd')
 const (
-	verifyDouble = `SELECT mail FROM clients WHERE mail = ?`
+	verifyDouble = `SELECT IFNULL(mail, "") FROM clients WHERE mail = ?`
 )
 
 const (
