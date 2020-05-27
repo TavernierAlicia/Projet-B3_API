@@ -56,9 +56,6 @@ func userCreate(name string, surname string, mail string, password string, birth
 	err = db.Get(&verif, verifyDouble, mail)
 	printErr(err)
 
-	fmt.Println(verif)
-	fmt.Println(mail)
-
 	if verif != mail {
 		_, err = db.Exec(createAccount, name, surname, mail, password, birth, phone, token, mail)
 		printErr(err)
