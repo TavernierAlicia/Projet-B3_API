@@ -1,8 +1,9 @@
 package main
 
 //Error struct
-type Error struct {
-	Text string
+type ret struct {
+	err     int64
+	message string
 }
 
 //get bars

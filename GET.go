@@ -29,7 +29,9 @@ func showBars(c *gin.Context) {
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 
 }
@@ -53,7 +55,9 @@ func searchName(c *gin.Context) {
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 }
 
@@ -69,7 +73,9 @@ func showFavs(c *gin.Context) {
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 
 }
@@ -85,7 +91,9 @@ func getUserProfile(c *gin.Context) {
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 
 }
@@ -103,7 +111,9 @@ func getEtabContent(c *gin.Context) {
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 
 }
@@ -121,7 +131,9 @@ func getOrder(c *gin.Context) {
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 
 }
@@ -136,6 +148,8 @@ func getOrders(c *gin.Context) {
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 }

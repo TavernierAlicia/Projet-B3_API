@@ -15,9 +15,13 @@ func deletingFavs(c *gin.Context) {
 
 	err = DeleteFromFavs(userid, etabid)
 	if errorReq(c, err) != true {
-		c.JSON(200, "deleted")
+		c.JSON(200, gin.H{
+			"code":    0,
+			"message": string("Fav deleted")})
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 
 }

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,48 +28,49 @@ func editUser(c *gin.Context) {
 	password := t.Pass
 	newPassword := t.NewPass
 
-	fmt.Println(name)
-
-	fmt.Println(surname)
-	fmt.Println(pic)
-
-	fmt.Println(birth)
-	fmt.Println(phone)
-
-	fmt.Println(password)
-	fmt.Println(newPassword)
-
 	//common infos change
 	if name != "" && surname != "" && birth != "" && phone != "" {
 		err = editUserData(userid, name, surname, birth, phone, pic)
 	} else {
-		c.JSON(400, "Field(s) missing")
+		c.JSON(400, gin.H{
+			"code":    6,
+			"message": string("Field(s) missing")})
 		return
 	}
 
 	//password change
 	if newPassword != "" {
 		if password == "" {
-			c.JSON(403, "No password")
+			c.JSON(403, gin.H{
+				"code":    7,
+				"message": string("No password")})
 		}
-		newPassword = encodePw(newPassword)
-		password = encodePw(password)
+		newPassword = newPassword
+		password = password
 		auth := authentification(mail, password)
 		if auth != "" {
 			if password == newPassword {
-				c.JSON(400, "Same passwords")
+				c.JSON(400, gin.H{
+					"code":    8,
+					"message": string("Same passwords")})
 				return
 			} else {
 				token = createUserToken()
 				err = editUserPass(userid, newPassword, token)
 			}
 		} else {
-			c.JSON(403, "Incorrect password")
+			c.JSON(403, gin.H{
+				"code":    9,
+				"message": string("Incorrect password")})
 		}
 	}
 	if errorReq(c, err) != true {
-		c.JSON(200, token)
+		c.JSON(200, gin.H{
+			"code":    0,
+			"message": string(token)})
 	} else {
-		c.JSON(400, "An error occured")
+		c.JSON(400, gin.H{
+			"code":    5,
+			"message": string("An error occured")})
 	}
 }

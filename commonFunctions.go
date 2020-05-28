@@ -1,8 +1,6 @@
 package main
 
 import (
-	"crypto/sha1"
-	"encoding/hex"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -31,22 +29,22 @@ func createUserToken() string {
 	return userToken
 }
 
-//if no page
+//if no route
 func returnError(c *gin.Context) {
-	message := "Nous sommes desoles, une erreur s'est produite"
-	//display error page
-	data := Error{
-		Text: message,
-	}
-	c.JSON(404, data)
+	c.JSON(404, gin.H{
+		"code":    10,
+		"message": string("This route doesn't exists")})
 }
 
+//Now encoding with app
+/*
 func encodePw(password string) string {
 	h := sha1.New()
 	h.Write([]byte(password))
 	sha1_hash := hex.EncodeToString(h.Sum(nil))
 	return sha1_hash
 }
+*/
 
 func errorReq(c *gin.Context, err error) bool {
 	if err != nil {
