@@ -94,7 +94,7 @@
   ##### Params 
   *Null*
   
-  ## Headers
+  ##### Headers
   *Null*
 
   ##### Body raw JSON
