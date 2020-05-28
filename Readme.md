@@ -162,3 +162,18 @@
 
   ##### Body
   *Null*
+
+
+
+
+  ### ERRORS
+  0 --> No error
+  1 --> This route doesn't exists
+  2 --> Login or password wrong
+  3 --> Mail already exists
+  4 --> Mismatch passwords
+  5 --> An error occured
+  6 --> Field(s) missing
+  7 --> No password
+  8 --> Same passwords
+  9 --> Incorrect password

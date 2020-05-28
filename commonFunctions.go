@@ -32,7 +32,7 @@ func createUserToken() string {
 //if no route
 func returnError(c *gin.Context) {
 	c.JSON(404, gin.H{
-		"code":    10,
+		"code":    1,
 		"message": string("This route doesn't exists")})
 }
 
