@@ -26,13 +26,12 @@ type Bars struct {
 }
 
 type User struct {
-	Id       int64  `db:"id"`
-	Name     string `db:"name"`
-	Surname  string `db:"surname"`
-	Mail     string `db:"mail"`
-	Pic      string `db:"profile_pic"`
-	Birth    string `db:"birth_date"`
-	Password string `db:"password"`
+	Id      int64  `db:"id"`
+	Name    string `db:"name"`
+	Surname string `db:"surname"`
+	Mail    string `db:"mail"`
+	Pic     string `db:"profile_pic"`
+	Birth   string `db:"birth_date"`
 }
 
 type BarView struct {

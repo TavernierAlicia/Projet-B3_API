@@ -49,7 +49,7 @@ const (
 
 //get user details
 const (
-	getUser = `SELECT id, name, surname, mail, profile_pic, birth_date, password FROM clients WHERE id = ?`
+	getUser = `SELECT id, name, surname, mail, profile_pic, birth_date FROM clients WHERE id = ?`
 )
 
 //change user data
