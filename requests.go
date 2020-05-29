@@ -103,7 +103,7 @@ const (
 
 //show one order detail
 const (
-	showTheOrder = `SELECT etabs.street_num, etabs.street_name, etabs.city, IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, name AS etab_name, commands.etab_id, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE commands.id = ?`
+	showTheOrder = `SELECT etabs.street_num, etabs.street_name, etabs.city, IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, commands.tip, commands.payment, name AS etab_name, commands.etab_id, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE commands.id = ?`
 )
 
 //----------------- PROS -----------------

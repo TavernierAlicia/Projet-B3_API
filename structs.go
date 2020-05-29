@@ -127,6 +127,8 @@ type CommandDetails struct {
 	Pic            string  `db:"main_pic"`
 	Date           string  `db:"cmd_date"`
 	Price          float64 `db:"totalprice"`
+	Payment        string  `db:"payment"`
+	Tip            int64   `db:"tip"`
 	Status         string  `db:"status"`
 }
 
