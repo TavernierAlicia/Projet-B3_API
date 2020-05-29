@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	//os/exec
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/spf13/viper"
@@ -39,6 +40,19 @@ func RunDb() (*sqlx.DB, string) {
 	if err != nil {
 		log.Error("failed to connect database", zap.String("database", dbname),
 			zap.Int("attempt", 3), zap.Duration("backoff", time.Second))
+
+		//only on server && not yet
+		/*
+			attempts := 0
+			for attempts < 3 {
+				exec.Command("/bin/sh", "-c", "sudo service restart mysqld")
+				//wait...
+				time.Sleep(5 * time.Second)
+				//reconnect...
+				RunDb()
+				attempts = attempts - 1
+			}
+		*/
 		return db, dbname
 
 	} else {

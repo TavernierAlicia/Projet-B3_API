@@ -2,10 +2,12 @@ package main
 
 import (
 	_ "fmt"
+	_ "io"
 	_ "net/http"
+	_ "os"
 	_ "strings"
-	_"os"
-	_"io"
+
+	"github.com/aviddiviner/gin-limit"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +22,7 @@ func main() {
 
 	//Define router
 	router := gin.Default()
+	router.Use(limit.MaxAllowed(20))
 
 	//noroute
 	router.NoRoute(returnError)
