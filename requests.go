@@ -3,7 +3,7 @@ package main
 //----------------- CLIENTS -----------------
 //create account (date format 'yyyy-mm-dd')
 const (
-	verifyDouble = `SELECT IFNULL(mail, "") FROM clients WHERE mail = ?`
+	verifyDouble = `SELECT mail FROM clients WHERE mail = ?`
 )
 
 const (
@@ -24,12 +24,12 @@ const (
 
 //get all etabs
 const (
-	getAllEtabs = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype, street_num, street_name, city, zip FROM etabs ORDER BY date DESC`
+	getAllEtabs = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype, street_num, street_name, city, zip, happy, happy_end FROM etabs ORDER BY date DESC`
 )
 
 //get etabs by text
 const (
-	searchResult = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype, street_num, street_name, city, zip FROM etabs WHERE subtype LIKE ? OR name LIKE ? OR city LIKE ? OR description LIKE ? ORDER BY date DESC`
+	searchResult = `SELECT id, name, description, type, latitude, longitude, main_pic, date, subtype, street_num, street_name, city, zip, happy, happy_end FROM etabs WHERE subtype LIKE ? OR name LIKE ? OR city LIKE ? OR description LIKE ? ORDER BY date DESC`
 )
 
 //get favs
@@ -91,19 +91,19 @@ const (
 	calcPrice = `UPDATE commands SET price = (SELECT SUM(price) FROM command_items WHERE command_id = ?) WHERE id = ?`
 )
 
-//reorder
-const (
-	reOrder = `SELECT items.etab_id, items.id, items.name, items.price, IFNULL(items.sale, 1) AS sale, (items.price * IFNULL(items.sale, 1)) AS newprice FROM command_items JOIN items ON command_items.item_id = items.id WHERE command_id = ?`
-)
-
 //show orders
 const (
-	showOrders = `SELECT IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, name AS etab_name, commands.etab_id, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE client_id = ? ORDER BY cmd_date DESC LIMIT 30`
+	showOrders = `SELECT IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, name AS etab_name, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE client_id = ? ORDER BY cmd_date DESC LIMIT 30`
 )
 
 //show orders details
 const (
-	showOrdersDetails = `SELECT command_id, COUNT(item_id) AS quantity, items.id AS item_id, items.name, command_items.price FROM command_items JOIN items ON command_items.item_id = items.id WHERE command_id = ? GROUP BY item_id`
+	showOrdersDetails = `SELECT command_id, COUNT(item_id) AS quantity, items.name, command_items.price FROM command_items JOIN items ON command_items.item_id = items.id WHERE command_id = ? GROUP BY item_id`
+)
+
+//show one order detail
+const (
+	showTheOrder = `SELECT etabs.street_num, etabs.street_name, etabs.city, IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, name AS etab_name, commands.etab_id, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE commands.id = ?`
 )
 
 //----------------- PROS -----------------

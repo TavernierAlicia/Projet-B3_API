@@ -270,16 +270,30 @@ func Order(userid int64, t TakeOrder) (err error) {
 	return err
 }
 
-func GetOrder(cmdId int64) (data []*OrderItems, err error) {
+func GetOrder(cmdId int64) (totalData []*OneCommand, err error) {
 	db, _ := RunDb()
 
-	data = []*OrderItems{}
+	data := []*CommandDetails{}
+	subData := []*CommandItems{}
+	totalData = []*OneCommand{}
 
-	err = db.Select(&data, reOrder, cmdId)
+	err = db.Select(&data, showTheOrder, cmdId)
+
+	for _, item := range data {
+
+		err = db.Select(&subData, showOrdersDetails, item.Id)
+		printErr(err)
+
+		cmd := &OneCommand{
+			*item,
+			subData,
+		}
+		totalData = append(totalData, cmd)
+	}
 
 	printErr(err)
 
-	return data, err
+	return totalData, err
 }
 
 func GetOrders(userid int64) (totalData []*Commands, err error) {

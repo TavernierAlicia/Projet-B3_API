@@ -21,9 +21,8 @@ type Bars struct {
 	StreetName  string  `db:"street_name"`
 	City        string  `db:"city"`
 	Zip         string  `db:"zip"`
-
-	Happy    string `db:"happy"`
-	HappyEnd string `db:"happy_end"`
+	Happy       string  `db:"happy"`
+	HappyEnd    string  `db:"happy_end"`
 }
 
 type User struct {
@@ -119,12 +118,30 @@ type Command struct {
 	Status    string  `db:"status"`
 }
 
+type CommandDetails struct {
+	Id             int64   `db:"id"`
+	Etab_id        int64   `db:"etab_id"`
+	EtabStreetNum  int64   `db:"street_num"`
+	EtabStreetName string  `db:"street_name"`
+	EtabCity       string  `db:"city"`
+	Etab_name      string  `db:"etab_name"`
+	Pic            string  `db:"main_pic"`
+	Date           string  `db:"cmd_date"`
+	Price          float64 `db:"totalprice"`
+	Status         string  `db:"status"`
+}
+
 type CommandItems struct {
 	CommandId int64   `db:"command_id"`
 	Item_id   int64   `db:"item_id"`
 	Quantity  int64   `db:"quantity"`
 	Name      string  `db:"name"`
 	Price     float64 `db:"price"`
+}
+
+type OneCommand struct {
+	Cmd      CommandDetails
+	CmdItems []*CommandItems
 }
 
 type Commands struct {
