@@ -234,7 +234,7 @@ func DeleteFromFavs(userid int64, etabid int64) (err error) {
 	return err
 }
 
-func Order(userid int64, t TakeOrder) (err error) {
+func Order(userid int64, t TakeOrder) (err error, command_id int64) {
 	db, _ := RunDb()
 
 	tx, err := db.Begin()
@@ -243,7 +243,7 @@ func Order(userid int64, t TakeOrder) (err error) {
 	res, err := tx.Exec(addOrder, userid, t.Etab_id, t.Instructions, t.Waiting_time, t.Payment, t.Tip)
 	printErr(addOrder, err)
 
-	command_id, err := res.LastInsertId()
+	command_id, err = res.LastInsertId()
 	for _, item := range t.Items {
 		_, err = tx.Exec(addOrderItems, command_id, item, item)
 		printErr(addOrderItems, err)
@@ -254,7 +254,7 @@ func Order(userid int64, t TakeOrder) (err error) {
 
 	err = tx.Commit()
 	printErr("tx commit", err)
-	return err
+	return err, command_id
 }
 
 func GetOrder(cmdId int64) (totalData []*OneCommand, err error) {

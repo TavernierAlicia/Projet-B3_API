@@ -109,11 +109,11 @@ func takeOrder(c *gin.Context) {
 
 	c.BindJSON(&t)
 
-	err := Order(userid, t)
+	err, command_id := Order(userid, t)
 	if errorReq(c, err) != true {
 		c.JSON(200, gin.H{
 			"code":    0,
-			"message": string("Ordered")})
+			"message": command_id})
 	} else {
 		c.JSON(400, gin.H{
 			"code":    5,
