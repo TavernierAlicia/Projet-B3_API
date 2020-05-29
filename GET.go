@@ -106,7 +106,7 @@ func getEtabContent(c *gin.Context) {
 	}
 
 	barid, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	printErr(err)
+	printErr("strconv id", err)
 	data, err = ShowBarView(userid, barid)
 	if errorReq(c, err) != true {
 		c.JSON(200, data)
@@ -125,7 +125,7 @@ func getOrder(c *gin.Context) {
 	}
 
 	cmdId, err := strconv.ParseInt(c.Param("commandid"), 10, 64)
-	printErr(err)
+	printErr("strconv comandid", err)
 
 	data, err := GetOrder(cmdId)
 	if errorReq(c, err) != true {

@@ -85,7 +85,7 @@ func addingFavs(c *gin.Context) {
 	}
 	etabid, err := strconv.ParseInt(c.Param("etabid"), 10, 64)
 
-	printErr(err)
+	printErr("strconv etabid", err)
 
 	err = AddToFavs(userid, etabid)
 	if errorReq(c, err) != true {

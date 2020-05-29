@@ -1,13 +1,10 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 )
-
-//c.Request.Header.Get("keyName")
 
 func checkAuth(c *gin.Context) int64 {
 	auth := c.Request.Header.Get("Authorization")
@@ -54,8 +51,21 @@ func errorReq(c *gin.Context, err error) bool {
 	}
 }
 
-func printErr(err error) {
+func printErr(request string, err error) {
 	if err != nil {
-		fmt.Println(err)
+		if request == "connect database" {
+			log.Error("Connect database Failed", zap.String("Failed", request),
+				zap.Error(err))
+		} else {
+			log.Error("Request failed", zap.String("Request", request),
+				zap.Error(err))
+		}
+
+	} else {
+		if request == "connect database" {
+			log.Info("Connexion etablished ", zap.String("database", "orderndrink"),
+				zap.Error(err))
+		}
 	}
+	return
 }
