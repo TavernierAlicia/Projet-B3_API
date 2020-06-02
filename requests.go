@@ -88,17 +88,17 @@ const (
 
 //calc order price
 const (
-	calcPrice = `UPDATE commands SET price = (SELECT SUM(price) FROM command_items WHERE command_id = ?) WHERE id = ?`
+	calcPrice = `UPDATE commands SET price = (SELECT IFNULL(SUM(price),0) FROM command_items WHERE command_id = ?) WHERE id = ?`
 )
 
 //show orders
 const (
-	showOrders = `SELECT IFNULL(commands.price, 0) AS totalprice, status, cmd_date, commands.id, name AS etab_name, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE client_id = ? ORDER BY cmd_date DESC LIMIT 30`
+	showOrders = `SELECT IFNULL(commands.price, 0) AS totalprice, commands.etab_id, status, cmd_date, commands.id, name AS etab_name, main_pic FROM commands JOIN etabs ON commands.etab_id = etabs.id WHERE client_id = ? ORDER BY cmd_date DESC LIMIT 30`
 )
 
 //show orders details
 const (
-	showOrdersDetails = `SELECT command_id, COUNT(item_id) AS quantity, items.name, command_items.price FROM command_items JOIN items ON command_items.item_id = items.id WHERE command_id = ? GROUP BY item_id`
+	showOrdersDetails = `SELECT command_id, command_items.item_id, COUNT(item_id) AS quantity, items.name, command_items.price FROM command_items JOIN items ON command_items.item_id = items.id WHERE command_id = ? GROUP BY item_id`
 )
 
 //show one order detail

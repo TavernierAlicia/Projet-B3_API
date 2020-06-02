@@ -266,9 +266,7 @@ func GetOrder(cmdId int64) (totalData []*OneCommand, err error) {
 
 	err = db.Select(&data, showTheOrder, cmdId)
 	printErr(showTheOrder, err)
-
 	for _, item := range data {
-
 		err = db.Select(&subData, showOrdersDetails, item.Id)
 		printErr(showOrdersDetails, err)
 
@@ -286,17 +284,16 @@ func GetOrders(userid int64) (totalData []*Commands, err error) {
 	db, _ := RunDb()
 
 	data := []*Command{}
-	subData := []*CommandItems{}
 	totalData = []*Commands{}
+	var subData []*CommandItems
 
 	err = db.Select(&data, showOrders, userid)
 	printErr(showOrders, err)
 
 	for _, item := range data {
-
+		subData = []*CommandItems{}
 		err = db.Select(&subData, showOrdersDetails, item.Id)
 		printErr(showOrdersDetails, err)
-
 		cmd := &Commands{
 			*item,
 			subData,
