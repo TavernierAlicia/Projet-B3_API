@@ -1,11 +1,5 @@
 package main
 
-//Error struct
-type ret struct {
-	err     int64
-	message string
-}
-
 //get bars
 type Bars struct {
 	Id          int64   `db:"id"`
@@ -30,6 +24,7 @@ type User struct {
 	Name    string `db:"name"`
 	Surname string `db:"surname"`
 	Mail    string `db:"mail"`
+	Phone   string `db:"phone"`
 	Pic     string `db:"profile_pic"`
 	Birth   string `db:"birth_date"`
 }
