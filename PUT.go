@@ -7,6 +7,7 @@ import (
 func editUser(c *gin.Context) {
 	userid := checkAuth(c)
 	var err error
+	validate := true
 
 	token := c.Request.Header.Get("Authorization")
 	//var data []*User
@@ -32,6 +33,7 @@ func editUser(c *gin.Context) {
 	if name != "" && surname != "" && birth != "" && phone != "" {
 		err = editUserData(userid, name, surname, birth, phone, pic)
 	} else {
+		validate = false
 		c.JSON(400, gin.H{
 			"code":    6,
 			"message": string("Field(s) missing")})
@@ -41,6 +43,7 @@ func editUser(c *gin.Context) {
 	//password change
 	if newPassword != "" {
 		if password == "" {
+			validate = false
 			c.JSON(403, gin.H{
 				"code":    7,
 				"message": string("No password")})
@@ -50,6 +53,7 @@ func editUser(c *gin.Context) {
 		auth := authentification(mail, password)
 		if auth != "" {
 			if password == newPassword {
+				validate = false
 				c.JSON(400, gin.H{
 					"code":    8,
 					"message": string("Same passwords")})
@@ -59,12 +63,14 @@ func editUser(c *gin.Context) {
 				err = editUserPass(userid, newPassword, token)
 			}
 		} else {
+			validate = false
 			c.JSON(403, gin.H{
 				"code":    9,
 				"message": string("Incorrect password")})
+			return
 		}
 	}
-	if errorReq(c, err) != true {
+	if errorReq(c, err) != true && validate == true {
 		c.JSON(200, gin.H{
 			"code":    0,
 			"message": string(token)})
