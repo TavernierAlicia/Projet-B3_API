@@ -61,9 +61,9 @@ func printErr(request string, err error) {
 				zap.Error(err))
 
 			//give error to app
-			c.JSON(404, gin.H{
-				"code":    10,
-				"message": string("Unable to connect database")})
+			// c.JSON(404, gin.H{
+			// 	"code":    10,
+			// 	"message": string("Unable to connect database")})
 
 			//reboot mysqld
 			exec.Command("/bin/sh", "-c", "sudo service restart mysqld")
