@@ -88,7 +88,7 @@ const (
 
 //calc order price
 const (
-	calcPrice = `UPDATE commands SET price = (SELECT IFNULL(SUM(price),0) FROM command_items WHERE command_id = ?) WHERE id = ?`
+	calcPrice = `UPDATE commands SET price = (SELECT IFNULL(SUM(price)+tip, 0) FROM command_items WHERE command_id = ?) WHERE id = ?`
 )
 
 //show orders
