@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os/exec"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -54,8 +56,18 @@ func errorReq(c *gin.Context, err error) bool {
 func printErr(request string, err error) {
 	if err != nil {
 		if request == "connect database" {
+			//display error
 			log.Error("Connect database Failed", zap.String("Failed", request),
 				zap.Error(err))
+
+			//give error to app
+			c.JSON(404, gin.H{
+				"code":    10,
+				"message": string("Unable to connect database")})
+
+			//reboot mysqld
+			exec.Command("/bin/sh", "-c", "sudo service restart mysqld")
+
 		} else {
 			log.Error("Request failed", zap.String("Request", request),
 				zap.Error(err))
