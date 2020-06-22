@@ -32,7 +32,7 @@ func createUserToken() string {
 func returnError(c *gin.Context) {
 	c.JSON(404, gin.H{
 		"code":    1,
-		"message": string("This route doesn't exists")})
+		"message": string("Hello! Welcome to order'N Drink API! This route doesn't exists, don't panic! You can check the doc at https://github.com/TavernierAlicia/Projet-B3_API !")})
 }
 
 //Now encoding with app
@@ -66,7 +66,8 @@ func printErr(request string, err error) {
 			// 	"message": string("Unable to connect database")})
 
 			//reboot mysqld
-			exec.Command("/bin/sh", "-c", "sudo service restart mysqld")
+			cmd := exec.Command("sudo service restart mysqld")
+			//exec.Command("/bin/sh", "-c", "sudo service restart mysqld")
 
 		} else {
 			log.Error("Request failed", zap.String("Request", request),
