@@ -66,7 +66,12 @@ func printErr(request string, err error) {
 			// 	"message": string("Unable to connect database")})
 
 			//reboot mysqld
-			exec.Command("/bin/sh", "-c", "sudo service restart mysqld")
+			out, execErr := exec.Command("sudo", "service", "mysqld", "restart").Output()
+			if execErr != nil {
+				log.Error("Restart Mysql Failed", zap.Error(execErr))
+			} else {
+				log.Info(string(out[:]))
+			}
 
 		} else {
 			log.Error("Request failed", zap.String("Request", request),
