@@ -67,7 +67,6 @@ func printErr(request string, err error) {
 
 			//reboot mysqld
 			cmd := exec.Command("sudo service restart mysqld")
-			//exec.Command("/bin/sh", "-c", "sudo service restart mysqld")
 
 		} else {
 			log.Error("Request failed", zap.String("Request", request),
